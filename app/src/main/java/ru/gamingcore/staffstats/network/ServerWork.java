@@ -68,9 +68,9 @@ public class ServerWork {
     }
 
     public void setPhoto(Bitmap bitmap) {
-        GetJsonAsync dataAsync = new GetJsonAsync();
-        dataAsync.setCommand(GetJsonAsync.UPLOAD_PHOTO);
+        GetJsonAsync dataAsync = setRequest();
         dataAsync.setMethod(GetJsonAsync.POST);
+        dataAsync.setCommand(GetJsonAsync.UPLOAD_PHOTO);
         dataAsync.addParam(UID, current_uid);
         dataAsync.addParam(FILE, ImageUtil.convert(bitmap));
         dataAsync.execute();

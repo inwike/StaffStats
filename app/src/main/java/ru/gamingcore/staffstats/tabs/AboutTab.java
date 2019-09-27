@@ -204,9 +204,9 @@ public class AboutTab extends DialogFragment implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        if (!graphs.get(currentBlockId).onTouch(view,motionEvent)) {
-            switchBlock();
-        }
+       // if (!graphs.get(currentBlockId).onTouch(view,motionEvent)) {
+         //   switchBlock();
+       // }
         return false;
     }
 }

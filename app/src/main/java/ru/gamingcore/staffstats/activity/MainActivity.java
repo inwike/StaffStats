@@ -23,10 +23,15 @@ import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.finger.AuthorizeDialog;
 import ru.gamingcore.staffstats.tabs.ScreenSlidePagerAdapter;
 
+import static ru.gamingcore.staffstats.utils.Avatar.setAvatar;
+
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "INWIKE";
 
     private static int PERMISSION_REQUEST_CODE = 123456;
+    private static final int SET_AVATAR_CODE = 777;
+
 
     private MyService service;
 
@@ -171,6 +176,20 @@ public class MainActivity extends AppCompatActivity {
             schedule.setText(service.emp_data.schedule);
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SET_AVATAR_CODE && resultCode == RESULT_OK) {
+            new UpdateAsync().execute(data.getData());
+        }
+    }
+
+    public void getAvatar(View view) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Select avatar"), SET_AVATAR_CODE );
+    }
 
 
     class UpdateAsync extends AsyncTask<Uri,Void, Bitmap> {
