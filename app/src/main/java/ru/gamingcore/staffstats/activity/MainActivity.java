@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ScreenSlidePagerAdapter pagerAdapter;
 
     private TextView firstname, lastname, secondname;
-    private TextView organization, department, position,type,schedule;
+    private TextView organization, department, position,type,schedule, exp;
     private ImageView photo;
 
     private ServiceConnection sConn = new ServiceConnection() {
@@ -84,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
         photo = findViewById(R.id.photo);
         type = findViewById(R.id.type);
         schedule = findViewById(R.id.schedule);
+        exp = findViewById(R.id.exp);
+
+
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         pager = findViewById(R.id.pager);
         pager.setAdapter(pagerAdapter);
@@ -176,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onUpdate(Emp_rating emp_rating) {
             pagerAdapter.updateSkills(emp_rating);
+            exp.setText(emp_rating.exp_emp);
         }
 
         @Override

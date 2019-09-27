@@ -15,33 +15,22 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     public ScreenSlidePagerAdapter(FragmentManager fm) {
         super(fm);
         fragments[0] = new SkillsTab();
-        fragments[1] = new SkillsTab();
+        fragments[1] = new SkillsTab2();
     }
 
     public void updateSkills(Emp_rating emp_rating) {
-        double[] skills = new double[6];
-        skills[0] = Double.valueOf(emp_rating.knld[11]);
-        skills[1] = Double.valueOf(emp_rating.soc[11]);
-        skills[2] = Double.valueOf(emp_rating.resp[11]);
-        skills[3] = Double.valueOf(emp_rating.activ[11]);
-        skills[4] = Double.valueOf(emp_rating.innov[11]);
-        skills[5] = Double.valueOf(emp_rating.ent[11]);
-
-        Polygon p = new Polygon(skills);
+        Polygon p = new Polygon(emp_rating.getCurrent());
+        ((SkillsTab)fragments[0]).graphs.add(p);
+        p = new Polygon(emp_rating.getAvr());
         ((SkillsTab)fragments[0]).graphs.add(p);
 
-        skills = new double[6];
-        skills[0] = Double.valueOf(emp_rating.avr_knld);
-        skills[1] = Double.valueOf(emp_rating.avr_soc);
-        skills[2] = Double.valueOf(emp_rating.avr_resp);
-        skills[3] = Double.valueOf(emp_rating.avr_activ);
-        skills[4] = Double.valueOf(emp_rating.avr_innov);
-        skills[5] = Double.valueOf(emp_rating.avr_ent);
-         p = new Polygon(skills);
-        ((SkillsTab)fragments[0]).graphs.add(p);
+
+        ((SkillsTab2)fragments[1]).emp_rating = emp_rating;
 
 
         ((SkillsTab)fragments[0]).drawPolygon();
+        ((SkillsTab)fragments[1]).drawPolygon();
+
     }
 
     @NonNull

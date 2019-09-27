@@ -7,15 +7,6 @@
     android:layout_gravity="center"
     android:visibility="visible">
 
-    <ImageView
-        android:id="@+id/android2"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_below="@id/logo"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@null"
-        android:src="@drawable/skills" />
-
     <TextView
         android:id="@+id/logo"
         android:layout_width="match_parent"
@@ -24,5 +15,82 @@
         android:gravity="center_horizontal"
         android:textSize="16sp" />
 
+    <ImageView
+        android:id="@+id/android2"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/logo"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@null"
+        android:src="@drawable/skills"/>
 
+    <LinearLayout
+        android:id="@+id/left"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_below="@id/android2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    <TextView
+        android:id="@+id/hint_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:text="@string/knld"
+        android:drawableStart="@drawable/skill_item_1"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/hint_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:text="@string/resp"
+        android:drawableStart="@drawable/skill_item_3"
+        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/hint_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@string/soc"
+            android:drawableStart="@drawable/skill_item_2"
+            android:textSize="14sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/right"
+        android:layout_toEndOf="@id/left"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_below="@id/android2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    <TextView
+        android:id="@+id/hint_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:text="@string/activ"
+        android:drawableStart="@drawable/skill_item_4"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/hint_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:text="@string/innov"
+        android:drawableStart="@drawable/skill_item_5"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/hint_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:text="@string/ent"
+        android:drawableStart="@drawable/skill_item_6"
+        android:textSize="14sp" />
+    </LinearLayout>
 </RelativeLayout>

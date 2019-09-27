@@ -81,6 +81,7 @@ public class JsonData {
     public static Emp_rating ParseRating(JSONObject obj) {
         Emp_rating emp_rating = new Emp_rating();
         try {
+            emp_rating.exp_emp = obj.getString("exp_emp");
             for (int i = 0;i < 12;i++) {
                 emp_rating.month[i] = obj.getString("month_"+(i+1));
                 emp_rating.knld[i] = obj.getString("knld_"+(i+1));

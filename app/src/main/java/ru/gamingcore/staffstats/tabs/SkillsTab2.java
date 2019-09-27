@@ -28,15 +28,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.gamingcore.staffstats.R;
+import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.utils.Polygon;
 
-public class SkillsTab2 extends DialogFragment implements View.OnTouchListener {
+public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
 
     private String[] header = {"Мои показатели", "Рост показателей", "Сравнение с общими"};
     private int[] colors = {0xff00BFFF, 0xffff3421};//blue, red
     private Bitmap up;
     private Bitmap down;
     private RelativeLayout InfoMain;
+    public Emp_rating emp_rating = new Emp_rating();
     public List<Polygon> graphs = new ArrayList<>();
 
     private ImageView imageView;
@@ -169,7 +171,8 @@ public class SkillsTab2 extends DialogFragment implements View.OnTouchListener {
     public void drawPolygon() {
         int size = 1;
 
-        textView.setText(header[currentBlockId]);
+        textView.setText(header[0]);
+
         if (graphs.size() > 0 && currentBlockId == 0) {
             size = 2;
         } else if (graphs.size() > 1 && currentBlockId > 0) {
@@ -202,10 +205,7 @@ public class SkillsTab2 extends DialogFragment implements View.OnTouchListener {
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-       // if (!graphs.get(currentBlockId).onTouch(view,motionEvent)) {
-         //   switchBlock();
-       // }
-        return false;
+    public void onClick(View view) {
+        switchBlock();;
     }
 }

@@ -30,9 +30,9 @@ import java.util.List;
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.utils.Polygon;
 
-public class SkillsTab extends DialogFragment implements View.OnTouchListener {
+public class SkillsTab extends DialogFragment implements View.OnClickListener {
 
-    private String[] header = {"Мои показатели", "Рост показателей", "Сравнение с общими"};
+    private String[] header = {"По организации"};
     private int[] colors = new int[2];//blue, red
     private Bitmap up;
     private Bitmap down;
@@ -51,7 +51,7 @@ public class SkillsTab extends DialogFragment implements View.OnTouchListener {
         View v = inflater.inflate(R.layout.about_page, container, false);
 
         InfoMain = v.findViewById(R.id.about);
-        InfoMain.setOnTouchListener(this);
+        InfoMain.setOnClickListener(this);
         imageView = v.findViewById(R.id.android2);
         textView = v.findViewById(R.id.logo);
         colors[0] = getResources().getColor(R.color.skill_1);
@@ -194,10 +194,7 @@ public class SkillsTab extends DialogFragment implements View.OnTouchListener {
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        // if (!graphs.get(currentBlockId).onTouch(view,motionEvent)) {
-        //   switchBlock();
-        // }
-        return false;
+    public void onClick(View view) {
+       // switchBlock();
     }
 }
