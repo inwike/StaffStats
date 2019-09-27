@@ -1,10 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".activity.MainActivity">
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <RelativeLayout
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="25dp"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/user" />
+
+            <TextView
+                android:id="@+id/lastname"
+                android:layout_toEndOf="@id/photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/def_lastname" />
+
+            <TextView
+                android:id="@+id/firstname"
+                android:layout_toEndOf="@id/photo"
+                android:layout_below="@id/lastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/def_firstname" />
+
+            <TextView
+                android:id="@+id/secondname"
+                android:layout_toEndOf="@id/photo"
+                android:layout_below="@id/firstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/def_secondname" />
+
+            <TextView
+                android:id="@+id/type"
+                android:layout_marginTop="25dp"
+                android:layout_toEndOf="@id/photo"
+                android:layout_below="@id/secondname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/def_type" />
+
+            <TextView
+                android:id="@+id/organization"
+                android:layout_toEndOf="@id/photo"
+                android:layout_below="@id/type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/def_organization" />
+
+            <TextView
+                android:id="@+id/department"
+                android:layout_toEndOf="@id/photo"
+                android:layout_below="@id/organization"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/def_department" />
+
+            <TextView
+                android:id="@+id/position"
+                android:layout_toEndOf="@id/photo"
+                android:layout_below="@id/department"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/def_position" />
+
+
+            <TextView
+                android:id="@+id/schedule"
+                android:layout_toEndOf="@id/photo"
+                android:layout_below="@id/position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@string/def_schedule" />
+
+        </RelativeLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager"
+            android:layout_below="@id/info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+</LinearLayout>

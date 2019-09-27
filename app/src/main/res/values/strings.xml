@@ -35,4 +35,12 @@
     <string name="gps_network_not_enabled">Включите навигацию</string>
     <string name="open_location_settings">Открыть настройки навигации</string>
     <string name="Cancel">Отмена</string>
+    <string name="def_lastname">lastname</string>
+    <string name="def_firstname">firstname</string>
+    <string name="def_secondname">secondname</string>
+    <string name="def_organization">organization</string>
+    <string name="def_department">department</string>
+    <string name="def_position">position</string>
+    <string name="def_type">type</string>
+    <string name="def_schedule">schedule</string>
 </resources>

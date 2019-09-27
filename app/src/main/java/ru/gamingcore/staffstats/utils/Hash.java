@@ -1,4 +1,4 @@
-package ru.gamingcore.inwikedivision.Utils;
+package ru.gamingcore.staffstats.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;

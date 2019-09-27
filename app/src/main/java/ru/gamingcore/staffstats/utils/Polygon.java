@@ -1,4 +1,4 @@
-package ru.gamingcore.inwikedivision.Utils;
+package ru.gamingcore.staffstats.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 
 public class Polygon {
     private static final String TAG = "INWIKE";
@@ -32,17 +34,13 @@ public class Polygon {
     public Polygon(double []skills) {
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint2.setStyle(Paint.Style.STROKE);
-
         tempBitmap = Bitmap.createBitmap(MAX, MAX, Bitmap.Config.ARGB_8888);
         tempCanvas = new Canvas(tempBitmap);
-
         this.skills = skills;
         arrows = new boolean[skills.length];
         for(int i = 0;i < skills.length;i++) {
             double radians = Math.toRadians(ANGLES[i]);
-
             double LEN = MAX_LENS[i] * skills[i] / 100;
-
             xy[i][0] = CENTER_X + (int)(LEN * Math.cos(radians));
             xy[i][1] = CENTER_Y + (int)(LEN * Math.sin(radians));
         }
@@ -53,10 +51,8 @@ public class Polygon {
         paint.setColor(color - 0xF0000000);
         paint2.setColor(color);
         tempBitmap.eraseColor(Color.TRANSPARENT);
-
         wallpath.reset();
         wallpath.moveTo(xy[0][0], xy[0][1]);
-
         for(int i = xy.length - 1; i >= 0; i--) {
             wallpath.lineTo(xy[i][0], xy[i][1]);
             if(needArrows) {
@@ -71,6 +67,10 @@ public class Polygon {
         tempCanvas.drawPath(wallpath, paint2);
 
         return tempBitmap;
+    }
+
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        return false;
     }
 
     public void checkArrow(Polygon p,boolean enabled) {

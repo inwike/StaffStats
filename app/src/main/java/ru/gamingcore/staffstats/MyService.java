@@ -12,14 +12,22 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
-import ru.gamingcore.staffstats.network.ServerWork;
 
 import androidx.appcompat.app.AlertDialog;
+
+import ru.gamingcore.staffstats.json.Allow_scan;
+import ru.gamingcore.staffstats.json.Emp_data;
+import ru.gamingcore.staffstats.json.List_violation;
+import ru.gamingcore.staffstats.network.ServerWork;
 
 public class MyService extends Service {
     private static final String TAG = "INWIKE";
 
     private final LocalBinder localBinder = new LocalBinder();
+
+    public Emp_data emp_data = new Emp_data();
+    private List_violation list_violation = new List_violation();
+    public Allow_scan allow_scan = new Allow_scan();
 
     private LocationManager locationManager;
     private MyLocationListener locationListener;
@@ -132,6 +140,27 @@ public class MyService extends Service {
     }
 
     private ServerWork.Listener listener = new ServerWork.Listener() {
+
+        @Override
+        public void onExec_data(Emp_data emp_data) {
+            MyService.this.emp_data = emp_data;
+            if(errorListener != null) {
+                errorListener.onFinish();
+            }
+        }
+
+        @Override
+        public void onAllow_scan(Allow_scan allow_scan) {
+           /* Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            MyService.this.allow_scan = allow_scan;
+            startActivity(intent);*/
+        }
+
+        @Override
+        public void onList_violation(List_violation list_violation) {
+            MyService.this.list_violation = list_violation;
+        }
 
         @Override
         public void onError() {

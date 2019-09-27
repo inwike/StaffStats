@@ -1,4 +1,4 @@
-package ru.gamingcore.inwikedivision.Utils;
+package ru.gamingcore.staffstats.utils;
 
 
 import android.content.Context;

@@ -1,20 +1,27 @@
 package ru.gamingcore.staffstats.network;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import ru.gamingcore.staffstats.network.GetJsonAsync;
+
+import ru.gamingcore.staffstats.json.Allow_scan;
+import ru.gamingcore.staffstats.json.Emp_data;
+import ru.gamingcore.staffstats.json.JsonData;
+import ru.gamingcore.staffstats.json.List_violation;
+import ru.gamingcore.staffstats.utils.ImageUtil;
 
 public class ServerWork {
     private static final String TAG = "INWIKE";
 
-    private static final String verif_id = "66b457e4-7c02-11e2-9362-001b11b25590";
-    private static final String HOST = "http://46.174.89.208:6060/Inwike/hs/Inwike/ID/";
+    private static final String verif_id = "87433448-7cc0-11e2-9368-001b11b25590";
+    private static final String HOST = "http://10.70.1.205/Inwike_HR/hs/Inwike/ID/";
     private static final String AUTH = "web:web";
-
-    private static final String UID = "exec_uid";
+   // emp_data?emp_uid=87433448-7cc0-11e2-9368-001b11b25590
+    private static final String UID = "emp_uid";
     private static final String ALLOW_ID = "allow_id";
+    private static final String FILE = "file";
 
 
     private String current_uid;
@@ -22,6 +29,12 @@ public class ServerWork {
     private Listener listener;
 
     public interface Listener {
+        void onExec_data(Emp_data emp_data);
+
+        void onAllow_scan(Allow_scan allow_scan);
+
+        void onList_violation(List_violation list_violation);
+
         void onError();
     }
 
@@ -38,9 +51,8 @@ public class ServerWork {
         return dataAsync;
     }
 
-    public void execData(String uid) {
-        current_uid = uid;
-
+    public void execData() {
+        current_uid = verif_id;
         GetJsonAsync dataAsync = setRequest();
         dataAsync.setCommand(GetJsonAsync.EXEC_DATA);
         dataAsync.addParam(UID, current_uid);
@@ -52,6 +64,15 @@ public class ServerWork {
         dataAsync.setCommand(GetJsonAsync.ALLOW_SCAN);
         dataAsync.addParam(UID, current_uid);
         dataAsync.addParam(ALLOW_ID, allow_id);
+        dataAsync.execute();
+    }
+
+    public void setPhoto(Bitmap bitmap) {
+        GetJsonAsync dataAsync = new GetJsonAsync();
+        dataAsync.setCommand(GetJsonAsync.UPLOAD_PHOTO);
+        dataAsync.setMethod(GetJsonAsync.POST);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.addParam(FILE, ImageUtil.convert(bitmap));
         dataAsync.execute();
     }
 
@@ -72,13 +93,20 @@ public class ServerWork {
                 }
 
                 JSONObject obj = new JSONObject(result);
+                Emp_data emp_data = JsonData.ParseExec(obj);
+                List_violation list_violation = JsonData.ParseViolation(obj);
+                Allow_scan allow_scan = JsonData.ParseAllowScan(obj);
 
-                //Exec_data exec_data = JsonData.ParseExec(obj);
-
-             /* if (allow_scan != null) {
+                if (emp_data != null) {
+                    listener.onExec_data(emp_data);
+                    return;
+                } else if (list_violation != null) {
+                    listener.onList_violation(list_violation);
+                    return;
+                } else if (allow_scan != null) {
                     listener.onAllow_scan(allow_scan);
                     return;
-                }*/
+                }
             } catch (JSONException e) {
                 Log.e(TAG, "JSONException " + e);
                 if (listener != null) {
