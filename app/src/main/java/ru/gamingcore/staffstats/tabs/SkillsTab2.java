@@ -11,7 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -24,8 +23,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
 
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.json.Emp_rating;
@@ -33,18 +31,19 @@ import ru.gamingcore.staffstats.utils.Polygon;
 
 public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
 
+    public Emp_rating emp_rating = new Emp_rating();
     private String[] header = {"Мои показатели", "Рост показателей", "Сравнение с общими"};
     private int[] colors = {0xff00BFFF, 0xffff3421};//blue, red
     private Bitmap up;
     private Bitmap down;
     private RelativeLayout InfoMain;
-    public Emp_rating emp_rating = new Emp_rating();
-    public List<Polygon> graphs = new ArrayList<>();
+    private int currentMonth = 0;
+    private String[] months;
 
     private ImageView imageView;
     private TextView textView;
 
-    private int currentBlockId = 0;
+    private int currentBlockId = 10;
 
     private boolean animating = false;
 
@@ -53,9 +52,12 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.about_page, container, false);
 
         InfoMain = v.findViewById(R.id.about);
-        InfoMain.setOnTouchListener(this);
+        InfoMain.setOnClickListener(this);
         imageView = v.findViewById(R.id.android2);
         textView = v.findViewById(R.id.logo);
+        Calendar c = Calendar.getInstance();
+        currentMonth = c.get(Calendar.MONTH);
+        months = getResources().getStringArray(R.array.months_array);
         drawPolygon();
         return v;
     }
@@ -84,11 +86,10 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
             return;
 
         animating = true;
-
-        if (currentBlockId < graphs.size() - 1) {
-            currentBlockId++;
+        if (currentBlockId == 0) {
+            currentBlockId = 10;
         } else {
-            currentBlockId = 0;
+            currentBlockId--;
         }
 
         if (InfoMain != null) {
@@ -169,32 +170,27 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
     }
 
     public void drawPolygon() {
+
+        String str = String.format("%s/%s", months[currentMonth], months[currentBlockId]);
+        textView.setText(str);
+
         int size = 1;
-
-        textView.setText(header[0]);
-
-        if (graphs.size() > 0 && currentBlockId == 0) {
-            size = 2;
-        } else if (graphs.size() > 1 && currentBlockId > 0) {
+        if (emp_rating.getSize() > 1) {
             size = 3;
         }
 
         Drawable[] layers = new Drawable[size];
         layers[size - 1] = getResources().getDrawable(R.drawable.skills, null);
-
         if (size > 1) {
-            Polygon p = graphs.get(0);
+            Polygon p = new Polygon(emp_rating.getCurrent());
             p.up = up;
             p.down = down;
             p.checkArrow(p, false);
-
-            if (size == 3) {
-                Polygon p2 = graphs.get(currentBlockId);
-                p.checkArrow(p2, true);
-                p2.up = up;
-                p2.down = down;
-                layers[1] = new BitmapDrawable(getResources(), p2.getBitmap(colors[1]));
-            }
+            Polygon p2 = new Polygon(emp_rating.getByMonth(currentBlockId));
+            p.checkArrow(p2, true);
+            p2.up = up;
+            p2.down = down;
+            layers[1] = new BitmapDrawable(getResources(), p2.getBitmap(colors[1]));
             layers[0] = new BitmapDrawable(getResources(), p.getBitmap(colors[0]));
         }
 
@@ -206,6 +202,6 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        switchBlock();;
+        switchBlock();
     }
 }

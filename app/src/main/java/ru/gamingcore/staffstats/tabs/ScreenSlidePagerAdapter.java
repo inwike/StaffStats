@@ -20,16 +20,16 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
     public void updateSkills(Emp_rating emp_rating) {
         Polygon p = new Polygon(emp_rating.getCurrent());
-        ((SkillsTab)fragments[0]).graphs.add(p);
+        ((SkillsTab) fragments[0]).graphs.add(p);
         p = new Polygon(emp_rating.getAvr());
-        ((SkillsTab)fragments[0]).graphs.add(p);
+        ((SkillsTab) fragments[0]).graphs.add(p);
 
 
-        ((SkillsTab2)fragments[1]).emp_rating = emp_rating;
+        ((SkillsTab2) fragments[1]).emp_rating = emp_rating;
 
 
-        ((SkillsTab)fragments[0]).drawPolygon();
-        ((SkillsTab)fragments[1]).drawPolygon();
+        ((SkillsTab) fragments[0]).drawPolygon();
+        ((SkillsTab2) fragments[1]).drawPolygon();
 
     }
 

@@ -82,14 +82,14 @@ public class JsonData {
         Emp_rating emp_rating = new Emp_rating();
         try {
             emp_rating.exp_emp = obj.getString("exp_emp");
-            for (int i = 0;i < 12;i++) {
-                emp_rating.month[i] = obj.getString("month_"+(i+1));
-                emp_rating.knld[i] = obj.getString("knld_"+(i+1));
-                emp_rating.soc[i] = obj.getString("soc_"+(i+1));
-                emp_rating.resp[i] = obj.getString("resp_"+(i+1));
-                emp_rating.activ[i] = obj.getString("activ_"+(i+1));
-                emp_rating.innov[i] = obj.getString("innov_"+(i+1));
-                emp_rating.ent[i] = obj.getString("ent_"+(i+1));
+            for (int i = 0; i < 12; i++) {
+                emp_rating.month[i] = obj.getString("month_" + (i + 1));
+                emp_rating.knld[i] = obj.getString("knld_" + (i + 1));
+                emp_rating.soc[i] = obj.getString("soc_" + (i + 1));
+                emp_rating.resp[i] = obj.getString("resp_" + (i + 1));
+                emp_rating.activ[i] = obj.getString("activ_" + (i + 1));
+                emp_rating.innov[i] = obj.getString("innov_" + (i + 1));
+                emp_rating.ent[i] = obj.getString("ent_" + (i + 1));
             }
             emp_rating.avr_knld = obj.getString("avr_knld");
             emp_rating.avr_soc = obj.getString("avr_soc");
@@ -97,6 +97,7 @@ public class JsonData {
             emp_rating.avr_activ = obj.getString("avr_activ");
             emp_rating.avr_innov = obj.getString("avr_innov");
             emp_rating.avr_ent = obj.getString("avr_ent");
+            emp_rating.size = 12;
         } catch (JSONException e) {
             Log.e(TAG, "JSONException " + e.getLocalizedMessage());
             return null;

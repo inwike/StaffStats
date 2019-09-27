@@ -152,8 +152,11 @@ public class MyService extends Service {
 
     public interface EventListener {
         void onError();
+
         void onUpload();
+
         void onUpdate(Emp_rating emp_rating);
+
         void onFinish();
     }
 

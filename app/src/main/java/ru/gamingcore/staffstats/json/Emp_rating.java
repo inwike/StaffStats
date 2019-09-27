@@ -2,6 +2,7 @@ package ru.gamingcore.staffstats.json;
 
 public class Emp_rating {
     public String exp_emp = "";
+    public int size = 0;
     public String[] month = new String[12];
     public String[] knld = new String[12];//знания/умения
     public String[] soc = new String[12];//коммуникабельность
@@ -18,6 +19,9 @@ public class Emp_rating {
     public String avr_ent = "";
 
 
+    public int getSize() {
+        return size;
+    }
 
     public double[] getCurrent() {
         return getByMonth(11);

@@ -13,20 +13,17 @@ import android.util.TypedValue;
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 
-public class ImageUtil
-{
-    public static Bitmap convert(String base64Str) throws IllegalArgumentException
-    {
+public class ImageUtil {
+    public static Bitmap convert(String base64Str) throws IllegalArgumentException {
         byte[] decodedBytes = Base64.decode(
-                base64Str.substring(base64Str.indexOf(",")  + 1),
+                base64Str.substring(base64Str.indexOf(",") + 1),
                 Base64.NO_WRAP
         );
 
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
 
-    public static String convert(Bitmap bitmap)
-    {
+    public static String convert(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
         return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
@@ -59,7 +56,7 @@ public class ImageUtil
             vBuffer.get(nv, ySize, vSize);
             uBuffer.get(nv, ySize + vSize, uSize);
         } else {
-            uBuffer.get(nv, ySize , uSize);
+            uBuffer.get(nv, ySize, uSize);
             vBuffer.get(nv, ySize + uSize, vSize);
         }
         return nv;

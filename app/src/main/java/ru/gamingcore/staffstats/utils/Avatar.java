@@ -4,9 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
 import android.util.Log;
+
+import androidx.exifinterface.media.ExifInterface;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,22 +18,22 @@ public class Avatar {
     private static final String TAG = "INWIKE";
     private static final int SIZE_LIMIT = 1024 * 1024;
 
-    public static Bitmap setAvatar(Context context, Uri from,int sampleSize, int quality) {
+    public static Bitmap setAvatar(Context context, Uri from, int sampleSize, int quality) {
         try {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = sampleSize;
-            InputStream in =  context.getContentResolver().openInputStream(from);
+            InputStream in = context.getContentResolver().openInputStream(from);
 
             ExifInterface ei = new ExifInterface(in);
             String FILENAME = "avatar.jpg";
 
             in.close();
 
-            in =  context.getContentResolver().openInputStream(from);
+            in = context.getContentResolver().openInputStream(from);
 
             int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
-            Bitmap image = BitmapFactory.decodeStream(in,null,options);
+            Bitmap image = BitmapFactory.decodeStream(in, null, options);
 
             in.close();
 
@@ -46,7 +47,7 @@ public class Avatar {
 
             if (in.available() > SIZE_LIMIT) {
                 in.close();
-                return setAvatar(context,from, (sampleSize*2), (quality/2));
+                return setAvatar(context, from, (sampleSize * 2), (quality / 2));
             }
 
             image = BitmapFactory.decodeStream(in);
@@ -63,9 +64,9 @@ public class Avatar {
                     return image;
             }
         } catch (FileNotFoundException e) {
-            Log.e(TAG, "FileNotFoundException "+e.getLocalizedMessage());
+            Log.e(TAG, "FileNotFoundException " + e.getLocalizedMessage());
         } catch (IOException e) {
-            Log.e(TAG, "IOException "+e.getLocalizedMessage());
+            Log.e(TAG, "IOException " + e.getLocalizedMessage());
         }
         return null;
     }

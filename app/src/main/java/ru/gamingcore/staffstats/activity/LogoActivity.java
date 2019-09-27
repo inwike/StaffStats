@@ -3,15 +3,15 @@ package ru.gamingcore.staffstats.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.ViewPropertyAnimatorCompat;
 import androidx.core.view.ViewPropertyAnimatorListener;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import ru.gamingcore.staffstats.R;
 
@@ -24,12 +24,12 @@ public class LogoActivity extends AppCompatActivity implements ViewPropertyAnima
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        Window window  =  getWindow();
-        if(window!= null) {
+        Window window = getWindow();
+        if (window != null) {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 WindowManager.LayoutParams attrib = window.getAttributes();
-                if(attrib != null)
+                if (attrib != null)
                     attrib.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
             }
         }
@@ -93,7 +93,7 @@ public class LogoActivity extends AppCompatActivity implements ViewPropertyAnima
     public void onAnimationEnd(View view) {
         Intent MainIntent = new Intent(this, MainActivity.class);
         startActivity(MainIntent);
-        overridePendingTransition(R.anim.splash_out,R.anim.splash_in);
+        overridePendingTransition(R.anim.splash_out, R.anim.splash_in);
         finish();
     }
 

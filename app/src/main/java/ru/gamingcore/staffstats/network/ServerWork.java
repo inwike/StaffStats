@@ -2,8 +2,10 @@ package ru.gamingcore.staffstats.network;
 
 import android.graphics.Bitmap;
 import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import ru.gamingcore.staffstats.json.Allow_scan;
 import ru.gamingcore.staffstats.json.Emp_data;
 import ru.gamingcore.staffstats.json.Emp_rating;
@@ -26,72 +28,6 @@ public class ServerWork {
     private String current_uid;
 
     private Listener listener;
-
-    public interface Listener {
-        void onExec_data(Emp_data emp_data);
-
-        void onEmp_rating(Emp_rating emp_rating);
-
-        void onAllow_scan(Allow_scan allow_scan);
-
-        void onList_violation(List_violation list_violation);
-
-        void onError();
-
-        void onUpload();
-    }
-
-    public void setListener(Listener listener) {
-        this.listener = listener;
-    }
-
-
-    private GetJsonAsync setRequest() {
-        GetJsonAsync dataAsync = new GetJsonAsync();
-        dataAsync.setListener(resultListener);
-        dataAsync.setHost(HOST);
-        dataAsync.setAuth(AUTH);
-        return dataAsync;
-    }
-
-    public void execData() {
-        current_uid = verif_id;
-        GetJsonAsync dataAsync = setRequest();
-        dataAsync.setCommand(GetJsonAsync.EXEC_DATA);
-        dataAsync.addParam(UID, current_uid);
-        dataAsync.execute();
-    }
-
-    public void allowScan(String allow_id) {
-        GetJsonAsync dataAsync = setRequest();
-        dataAsync.setCommand(GetJsonAsync.ALLOW_SCAN);
-        dataAsync.addParam(UID, current_uid);
-        dataAsync.addParam(ALLOW_ID, allow_id);
-        dataAsync.execute();
-    }
-
-    public void empRating() {
-        GetJsonAsync dataAsync = setRequest();
-        dataAsync.setCommand(GetJsonAsync.EMP_RATING);
-        dataAsync.addParam(UID, current_uid);
-        dataAsync.execute();
-    }
-
-    public void setPhoto(Bitmap bitmap) {
-        GetJsonAsync dataAsync = setRequest();
-        dataAsync.setMethod(GetJsonAsync.POST);
-        dataAsync.setCommand(GetJsonAsync.UPLOAD_PHOTO);
-        dataAsync.addParam(UID, current_uid);
-        dataAsync.addParam(FILE, ImageUtil.convert(bitmap));
-        dataAsync.execute();
-    }
-
-    public void listViolation() {
-        GetJsonAsync dataAsync = setRequest();
-        dataAsync.setCommand(GetJsonAsync.LIST_VIOLATION);
-        dataAsync.execute();
-    }
-
     private GetJsonAsync.AsyncTaskListener resultListener = new GetJsonAsync.AsyncTaskListener() {
         @Override
         public void onResult(String result) {
@@ -146,6 +82,71 @@ public class ServerWork {
             }
         }
     };
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+
+    private GetJsonAsync setRequest() {
+        GetJsonAsync dataAsync = new GetJsonAsync();
+        dataAsync.setListener(resultListener);
+        dataAsync.setHost(HOST);
+        dataAsync.setAuth(AUTH);
+        return dataAsync;
+    }
+
+    public void execData() {
+        current_uid = verif_id;
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setCommand(GetJsonAsync.EXEC_DATA);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.execute();
+    }
+
+    public void allowScan(String allow_id) {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setCommand(GetJsonAsync.ALLOW_SCAN);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.addParam(ALLOW_ID, allow_id);
+        dataAsync.execute();
+    }
+
+    public void empRating() {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setCommand(GetJsonAsync.EMP_RATING);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.execute();
+    }
+
+    public void setPhoto(Bitmap bitmap) {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setMethod(GetJsonAsync.POST);
+        dataAsync.setCommand(GetJsonAsync.UPLOAD_PHOTO);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.addParam(FILE, ImageUtil.convert(bitmap));
+        dataAsync.execute();
+    }
+
+    public void listViolation() {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setCommand(GetJsonAsync.LIST_VIOLATION);
+        dataAsync.execute();
+    }
+
+    public interface Listener {
+        void onExec_data(Emp_data emp_data);
+
+        void onEmp_rating(Emp_rating emp_rating);
+
+        void onAllow_scan(Allow_scan allow_scan);
+
+        void onList_violation(List_violation list_violation);
+
+        void onError();
+
+        void onUpload();
+    }
 
 /*
     //(c) http://www.pocketmagic.net/?p=1662

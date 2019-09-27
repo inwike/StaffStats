@@ -35,19 +35,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/photo"
-                android:textStyle="bold"
                 android:gravity="start"
-                android:text="@string/def_lastname" />
+                android:text="@string/def_lastname"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/firstname"
-                android:layout_marginStart="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_toEndOf="@id/lastname"
                 android:gravity="start"
-                android:textStyle="bold"
-                android:text="@string/def_firstname" />
+                android:text="@string/def_firstname"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/secondname"
@@ -56,15 +56,15 @@
                 android:layout_below="@id/lastname"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
-                android:textStyle="bold"
-                android:text="@string/def_secondname" />
+                android:text="@string/def_secondname"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/type"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/secondname"
+                android:layout_marginTop="10dp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
                 android:text="@string/def_type" />
@@ -73,38 +73,38 @@
                 android:id="@+id/organization"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
                 android:layout_below="@id/type"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
                 android:text="@string/def_organization" />
 
             <TextView
                 android:id="@+id/department"
-                android:layout_marginStart="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/organization"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
                 android:text="@string/def_department" />
 
             <TextView
                 android:id="@+id/position"
-                android:layout_marginStart="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/department"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
                 android:text="@string/def_position" />
 
             <TextView
                 android:id="@+id/schedule"
-                android:layout_marginStart="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/position"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
                 android:text="@string/def_schedule" />

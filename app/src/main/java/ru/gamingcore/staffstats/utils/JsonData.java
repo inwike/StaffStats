@@ -30,50 +30,13 @@ public class JsonData {
 
     public Bitmap Exec_foto = null;
 
-
-    public class Build {
-        public String id_builds = "";
-        public String name_builds = "";
-        public String address = "";
-        public String latitude = "";
-        public String longitude = "";
-
-        public boolean active = false; //
-    }
-
-    public class Allowance {
-        public String id_allow = "";
-        public String name_allow = "";
-        public String start_date = "";
-        public String stop_date = "";
-        public boolean check;
-        public boolean avail;
-    }
-
-    public class Proj {
-        public String proj_id = "";
-        public String proj_name = "";
-        public List<Allowance> allowances = new ArrayList<>();
-        public List<Build> builds = new ArrayList<>();
-        public List<Build> activeBuilds = new ArrayList<>();
-
-        public boolean check;
-
-        public boolean active = false; //
-    }
-
-    public class Violation {
-        public String violation_id = "";
-        public String violation_name = "";
-    }
-
     public void Parse(JSONObject obj) {
         try {
             exec_name = obj.getString("exec_name");
             position_name = obj.getString("position_name");
             exec_foto = obj.getString("exec_foto");
 
-            byte[] buf = Base64.decode(exec_foto,Base64.NO_WRAP);
+            byte[] buf = Base64.decode(exec_foto, Base64.NO_WRAP);
             Exec_foto = BitmapFactory.decodeByteArray(buf, 0, buf.length);
 
             org_name = obj.getString("org_name");
@@ -129,7 +92,7 @@ public class JsonData {
                     lat = Math.abs(lat - Latitude);
                     lon = Math.abs(lon - Longitude);
 
-                    if(lat <= 12 && lon <= 12) {
+                    if (lat <= 12 && lon <= 12) {
                         build.active = true;
                         proj.active = true;
                         proj.activeBuilds.add(build);
@@ -140,7 +103,7 @@ public class JsonData {
                 }
                 this.projs.add(proj);
 
-                if(proj.active) {
+                if (proj.active) {
                     activeProjs.add(proj);
                 }
             }
@@ -158,10 +121,46 @@ public class JsonData {
                 }
 
             } catch (JSONException e) {
-                Log.e(TAG,"JSONException "+e.getLocalizedMessage());
+                Log.e(TAG, "JSONException " + e.getLocalizedMessage());
             }
         }
 
+    }
+
+    public class Build {
+        public String id_builds = "";
+        public String name_builds = "";
+        public String address = "";
+        public String latitude = "";
+        public String longitude = "";
+
+        public boolean active = false; //
+    }
+
+    public class Allowance {
+        public String id_allow = "";
+        public String name_allow = "";
+        public String start_date = "";
+        public String stop_date = "";
+        public boolean check;
+        public boolean avail;
+    }
+
+    public class Proj {
+        public String proj_id = "";
+        public String proj_name = "";
+        public List<Allowance> allowances = new ArrayList<>();
+        public List<Build> builds = new ArrayList<>();
+        public List<Build> activeBuilds = new ArrayList<>();
+
+        public boolean check;
+
+        public boolean active = false; //
+    }
+
+    public class Violation {
+        public String violation_id = "";
+        public String violation_name = "";
     }
 
 }

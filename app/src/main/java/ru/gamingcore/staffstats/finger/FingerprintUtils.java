@@ -16,13 +16,6 @@ public final class FingerprintUtils {
     private FingerprintUtils() {
     }
 
-    public enum mSensorState {
-        NOT_SUPPORTED,
-        NOT_BLOCKED,
-        NO_FINGERPRINTS,
-        READY
-    }
-
     public static boolean checkFingerprintCompatibility(@NonNull Context context) {
         return FingerprintManagerCompat.from(context).isHardwareDetected();
     }
@@ -51,5 +44,12 @@ public final class FingerprintUtils {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static boolean isSensorStateAt(@NonNull mSensorState state, @NonNull Context context) {
         return checkSensorState(context) == state;
+    }
+
+    public enum mSensorState {
+        NOT_SUPPORTED,
+        NOT_BLOCKED,
+        NO_FINGERPRINTS,
+        READY
     }
 }

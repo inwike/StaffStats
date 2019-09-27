@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetJsonAsync extends AsyncTask<Void, Void, String> {
-    private static final String TAG = "INWIKE";
-
     public static final String GET = "GET";
     public static final String POST = "POST";
     public static final String EXEC_DATA = "emp_data";
@@ -28,8 +26,7 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
     public static final String EMP_RATING = "emp_rating";
     public static final String CREATE_VIOLATION = "create_violation";
     public static final String LIST_VIOLATION = "list_violation";
-
-
+    private static final String TAG = "INWIKE";
     private String method = GET;
     private String host;
     private String auth;
@@ -62,19 +59,13 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
         params.add(new Param(name, value));
     }
 
-
-    public interface AsyncTaskListener {
-        void onResult(String result);
-        void onError();
-    }
-
     @Override
     protected String doInBackground(Void... voids) {
         String answer = "";
 
         try {
 
-            if(host == null || auth == null || command == null)
+            if (host == null || auth == null || command == null)
                 throw new Exception("error null");
 
             if (method.contains(GET)) {
@@ -100,7 +91,7 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
             }
 
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new Exception("Error " + connection.getResponseCode()+connection.getResponseMessage());
+                throw new Exception("Error " + connection.getResponseCode() + connection.getResponseMessage());
             }
 
             InputStream content = connection.getInputStream();
@@ -147,6 +138,12 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
             }
         }
         return result.toString();
+    }
+
+    public interface AsyncTaskListener {
+        void onResult(String result);
+
+        void onError();
     }
 
     class Param {

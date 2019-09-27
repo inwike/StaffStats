@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,15 +20,13 @@ import androidx.core.os.CancellationSignal;
 import androidx.fragment.app.DialogFragment;
 
 import ru.gamingcore.staffstats.R;
-import ru.gamingcore.staffstats.activity.MainActivity;
 
 
 public class AuthorizeDialog extends DialogFragment implements DialogInterface.OnClickListener {
+    private static final String PIN = "pin";
     private EditText mEditText;
     private SharedPreferences mPreferences;
     private FingerprintHelper mFingerprintHelper;
-    private static final String PIN = "pin";
-
 
     @NonNull
     @Override
@@ -43,7 +40,7 @@ public class AuthorizeDialog extends DialogFragment implements DialogInterface.O
         builder.setTitle(R.string.app_name)
                 .setCancelable(true)
                 .setView(view)
-                .setPositiveButton(R.string.enter,this);
+                .setPositiveButton(R.string.enter, this);
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         mEditText = view.findViewById(R.id.editText);
@@ -93,7 +90,7 @@ public class AuthorizeDialog extends DialogFragment implements DialogInterface.O
         if (FingerprintUtils.isSensorStateAt(FingerprintUtils.mSensorState.READY, getContext())) {
             FingerprintManagerCompat.CryptoObject cryptoObject = CryptoUtils.getCryptoObject();
             if (cryptoObject != null) {
-            //    Toast.makeText(getContext(), "use fingerprint to login", Toast.LENGTH_LONG).show();
+                //    Toast.makeText(getContext(), "use fingerprint to login", Toast.LENGTH_LONG).show();
                 mFingerprintHelper = new FingerprintHelper(getContext());
                 mFingerprintHelper.startAuth(cryptoObject);
             } else {
@@ -150,7 +147,6 @@ public class AuthorizeDialog extends DialogFragment implements DialogInterface.O
         }
 
     }
-
 
 
 }

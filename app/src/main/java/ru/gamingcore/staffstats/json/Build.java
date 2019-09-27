@@ -1,6 +1,6 @@
 package ru.gamingcore.staffstats.json;
 
-public  class Build {
+public class Build {
     public String id_builds = "";
     public String name_builds = "";
     public String address = "";
