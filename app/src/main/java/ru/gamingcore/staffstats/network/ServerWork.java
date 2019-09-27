@@ -2,10 +2,8 @@ package ru.gamingcore.staffstats.network;
 
 import android.graphics.Bitmap;
 import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import ru.gamingcore.staffstats.json.Allow_scan;
 import ru.gamingcore.staffstats.json.Emp_data;
 import ru.gamingcore.staffstats.json.JsonData;
@@ -18,11 +16,10 @@ public class ServerWork {
     private static final String verif_id = "87433448-7cc0-11e2-9368-001b11b25590";
     private static final String HOST = "http://10.70.1.205/Inwike_HR/hs/Inwike/ID/";
     private static final String AUTH = "web:web";
-   // emp_data?emp_uid=87433448-7cc0-11e2-9368-001b11b25590
+    // emp_data?emp_uid=87433448-7cc0-11e2-9368-001b11b25590
     private static final String UID = "emp_uid";
     private static final String ALLOW_ID = "allow_id";
     private static final String FILE = "file";
-
 
     private String current_uid;
 
@@ -76,12 +73,10 @@ public class ServerWork {
         dataAsync.execute();
     }
 
-
     public void listViolation() {
         GetJsonAsync dataAsync = setRequest();
         dataAsync.setCommand(GetJsonAsync.LIST_VIOLATION);
         dataAsync.execute();
-
     }
 
     private GetJsonAsync.AsyncTaskListener resultListener = new GetJsonAsync.AsyncTaskListener() {

@@ -2,21 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
 
-        <RelativeLayout
-            android:id="@+id/about"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="onClick">
+    <RelativeLayout
+        android:id="@+id/about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="onClick">
 
-            <include layout="@layout/about_page_1_1"/>
-            <include layout="@layout/about_page_1_2"/>
-            <include layout="@layout/about_page_1_3"/>
+        <include layout="@layout/about_page_1_1" />
 
-        </RelativeLayout>
+        <include layout="@layout/about_page_1_2" />
+
+        <include layout="@layout/about_page_1_3" />
+
+    </RelativeLayout>
 
 </LinearLayout>

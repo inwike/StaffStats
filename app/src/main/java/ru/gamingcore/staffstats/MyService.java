@@ -26,35 +26,51 @@ public class MyService extends Service {
     private final LocalBinder localBinder = new LocalBinder();
 
     public Emp_data emp_data = new Emp_data();
-    private List_violation list_violation = new List_violation();
     public Allow_scan allow_scan = new Allow_scan();
-
+    public ServerWork serverWork = new ServerWork();
+    private List_violation list_violation = new List_violation();
     private LocationManager locationManager;
     private MyLocationListener locationListener;
-
     private ErrorListener errorListener;
+    private ServerWork.Listener listener = new ServerWork.Listener() {
 
-    public void setErrorListener(ErrorListener errorListener) {
-        this.errorListener = errorListener;
-    }
-
-    public interface ErrorListener {
-        void onError();
-        void onFinish();
-    }
-
-
-    public class LocalBinder extends Binder {
-        public MyService getService() {
-            return MyService.this;
+        @Override
+        public void onExec_data(Emp_data emp_data) {
+            MyService.this.emp_data = emp_data;
+            if (errorListener != null) {
+                errorListener.onFinish();
+            }
         }
-    }
 
-    public ServerWork serverWork = new ServerWork();
+        @Override
+        public void onAllow_scan(Allow_scan allow_scan) {
+           /* Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            MyService.this.allow_scan = allow_scan;
+            startActivity(intent);*/
+        }
+
+        @Override
+        public void onList_violation(List_violation list_violation) {
+            MyService.this.list_violation = list_violation;
+        }
+
+        @Override
+        public void onError() {
+            Log.e(TAG, "onError");
+            if (errorListener != null) {
+                errorListener.onError();
+            }
+        }
+    };
 
 
     public MyService() {
         serverWork.setListener(listener);
+    }
+
+    public void setErrorListener(ErrorListener errorListener) {
+        this.errorListener = errorListener;
     }
 
     @Override
@@ -117,6 +133,18 @@ public class MyService extends Service {
         }
     }
 
+    public interface ErrorListener {
+        void onError();
+
+        void onFinish();
+    }
+
+    public class LocalBinder extends Binder {
+        public MyService getService() {
+            return MyService.this;
+        }
+    }
+
     private class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location location) {
@@ -138,36 +166,4 @@ public class MyService extends Service {
 
         }
     }
-
-    private ServerWork.Listener listener = new ServerWork.Listener() {
-
-        @Override
-        public void onExec_data(Emp_data emp_data) {
-            MyService.this.emp_data = emp_data;
-            if(errorListener != null) {
-                errorListener.onFinish();
-            }
-        }
-
-        @Override
-        public void onAllow_scan(Allow_scan allow_scan) {
-           /* Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            MyService.this.allow_scan = allow_scan;
-            startActivity(intent);*/
-        }
-
-        @Override
-        public void onList_violation(List_violation list_violation) {
-            MyService.this.list_violation = list_violation;
-        }
-
-        @Override
-        public void onError() {
-            Log.e(TAG,"onError");
-            if(errorListener != null) {
-                errorListener.onError();
-            }
-        }
-    };
 }

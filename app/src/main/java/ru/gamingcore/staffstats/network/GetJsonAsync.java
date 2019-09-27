@@ -85,7 +85,6 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
             URL url = new URL(host);
 
             byte[] encoding = Base64.encode(auth.getBytes(), Base64.NO_WRAP);
-
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(method);
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; param=value");
@@ -100,7 +99,7 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
             }
 
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new Exception("Error " + connection.getResponseCode());
+                throw new Exception("Error " + connection.getResponseCode()+connection.getResponseMessage());
             }
 
             InputStream content = connection.getInputStream();
@@ -140,14 +139,12 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
 
     private String getPostParams() {
         JSONObject result = new JSONObject();
-
         for (Param param : params) {
             try {
                 result.put(param.name, param.value);
             } catch (JSONException ignored) {
             }
         }
-
         return result.toString();
     }
 
