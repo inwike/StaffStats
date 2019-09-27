@@ -27,6 +27,10 @@ public class Emp_rating {
         return getByMonth(11);
     }
 
+    public String getMonth(int n) {
+        return month[n];
+    }
+
     public double[] getByMonth(int m) {
         double[] values = new double[6];
         values[0] = Double.valueOf(knld[m]);

@@ -37,11 +37,11 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
     private Bitmap up;
     private Bitmap down;
     private RelativeLayout InfoMain;
-    private int currentMonth = 0;
-    private String[] months;
 
     private ImageView imageView;
-    private TextView textView;
+    private TextView logo1;
+    private TextView logo2;
+
 
     private int currentBlockId = 10;
 
@@ -49,15 +49,13 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.about_page, container, false);
+        View v = inflater.inflate(R.layout.about_page2, container, false);
 
         InfoMain = v.findViewById(R.id.about);
         InfoMain.setOnClickListener(this);
         imageView = v.findViewById(R.id.android2);
-        textView = v.findViewById(R.id.logo);
-        Calendar c = Calendar.getInstance();
-        currentMonth = c.get(Calendar.MONTH);
-        months = getResources().getStringArray(R.array.months_array);
+        logo1 = v.findViewById(R.id.logo1);
+        logo2 = v.findViewById(R.id.logo2);
         drawPolygon();
         return v;
     }
@@ -170,11 +168,6 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
     }
 
     public void drawPolygon() {
-
-        String str = String.format("%s/%s", months[currentMonth], months[currentBlockId]);
-
-        textView.setText(str);
-
         int size = 1;
         if (emp_rating.getSize() > 1) {
             size = 3;
@@ -183,6 +176,8 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
         Drawable[] layers = new Drawable[size];
         layers[size - 1] = getResources().getDrawable(R.drawable.skills, null);
         if (size > 1) {
+            logo1.setText(String.format("%s / ", emp_rating.getMonth(11)));
+            logo2.setText(emp_rating.getMonth(currentBlockId));
             Polygon p = new Polygon(emp_rating.getCurrent());
             p.up = up;
             p.down = down;

@@ -31,6 +31,9 @@ public class Polygon {
     public Polygon(double[] skills) {
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint2.setStyle(Paint.Style.STROKE);
+        paint2.setStrokeWidth(3);
+        paint.setStrokeWidth(3);
+
         tempBitmap = Bitmap.createBitmap(MAX, MAX, Bitmap.Config.ARGB_8888);
         tempCanvas = new Canvas(tempBitmap);
         this.skills = skills;
@@ -49,7 +52,6 @@ public class Polygon {
         paint2.setColor(color);
         tempBitmap.eraseColor(Color.TRANSPARENT);
         wallpath.reset();
-        System.out.println("xy = " + xy[0][0] + " xy[0][1]" + xy[0][1]);
         wallpath.moveTo(xy[0][0], xy[0][1]);
         for (int i = xy.length - 1; i >= 0; i--) {
             wallpath.lineTo(xy[i][0], xy[i][1]);
