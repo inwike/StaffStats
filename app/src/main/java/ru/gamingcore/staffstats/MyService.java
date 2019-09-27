@@ -56,6 +56,13 @@ public class MyService extends Service {
         }
 
         @Override
+        public void onUpload() {
+            if (errorListener != null) {
+                errorListener.onUpload();
+            }
+        }
+
+        @Override
         public void onError() {
             Log.e(TAG, "onError");
             if (errorListener != null) {
@@ -135,7 +142,7 @@ public class MyService extends Service {
 
     public interface ErrorListener {
         void onError();
-
+        void onUpload();
         void onFinish();
     }
 

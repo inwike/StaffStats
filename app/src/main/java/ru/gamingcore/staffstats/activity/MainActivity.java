@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private MyService service;
+    private Bitmap tmp;
 
     private ViewPager pager;
     private View main;
@@ -164,6 +165,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
+        public void onUpload() {
+            if (photo != null && tmp != null) {
+                photo.setImageBitmap(tmp);
+            }
+        }
+
+        @Override
         public void onFinish() {
             firstname.setText(service.emp_data.firstname);
             lastname.setText(service.emp_data.lastname);
@@ -209,8 +217,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Bitmap bp) {
-            if(bp != null)
+            if(bp != null) {
                 service.serverWork.setPhoto(bp);
+                tmp = bp;
+            }
         }
     }
 }

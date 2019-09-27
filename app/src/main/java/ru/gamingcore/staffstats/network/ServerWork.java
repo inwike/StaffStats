@@ -8,6 +8,7 @@ import ru.gamingcore.staffstats.json.Allow_scan;
 import ru.gamingcore.staffstats.json.Emp_data;
 import ru.gamingcore.staffstats.json.JsonData;
 import ru.gamingcore.staffstats.json.List_violation;
+import ru.gamingcore.staffstats.json.Upload_data;
 import ru.gamingcore.staffstats.utils.ImageUtil;
 
 public class ServerWork {
@@ -33,6 +34,8 @@ public class ServerWork {
         void onList_violation(List_violation list_violation);
 
         void onError();
+
+        void onUpload();
     }
 
     public void setListener(Listener listener) {
@@ -89,16 +92,24 @@ public class ServerWork {
 
                 JSONObject obj = new JSONObject(result);
                 Emp_data emp_data = JsonData.ParseExec(obj);
+                Upload_data upload_data = JsonData.ParseUpload(obj);
+
                 List_violation list_violation = JsonData.ParseViolation(obj);
                 Allow_scan allow_scan = JsonData.ParseAllowScan(obj);
 
+                if (upload_data != null) {
+                    listener.onUpload();
+                    return;
+                }
                 if (emp_data != null) {
                     listener.onExec_data(emp_data);
                     return;
-                } else if (list_violation != null) {
+                }
+                if (list_violation != null) {
                     listener.onList_violation(list_violation);
                     return;
-                } else if (allow_scan != null) {
+                }
+                if (allow_scan != null) {
                     listener.onAllow_scan(allow_scan);
                     return;
                 }

@@ -70,4 +70,17 @@ public class JsonData {
         }
         return allow_scan;
     }
+
+
+    public static Upload_data ParseUpload(JSONObject obj) {
+        Upload_data upload_data = new Upload_data();
+        try {
+            upload_data.loaded = obj.getString("loaded");
+        } catch (JSONException e) {
+            Log.e(TAG, "JSONException " + e.getLocalizedMessage());
+            return null;
+        }
+        return upload_data;
+    }
+
 }
