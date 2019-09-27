@@ -172,6 +172,7 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
     public void drawPolygon() {
 
         String str = String.format("%s/%s", months[currentMonth], months[currentBlockId]);
+
         textView.setText(str);
 
         int size = 1;
