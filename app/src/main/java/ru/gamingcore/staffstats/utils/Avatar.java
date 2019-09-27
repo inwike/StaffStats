@@ -24,7 +24,7 @@ public class Avatar {
             InputStream in =  context.getContentResolver().openInputStream(from);
 
             ExifInterface ei = new ExifInterface(in);
-            String FILENAME = "avatar.png";
+            String FILENAME = "avatar.jpg";
 
             in.close();
 
@@ -38,7 +38,7 @@ public class Avatar {
 
             OutputStream out = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 
-            image.compress(Bitmap.CompressFormat.PNG, quality, out);
+            image.compress(Bitmap.CompressFormat.JPEG, quality, out);
 
             out.close();
 
