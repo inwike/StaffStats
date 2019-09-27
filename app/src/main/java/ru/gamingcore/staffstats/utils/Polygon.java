@@ -52,6 +52,7 @@ public class Polygon {
         paint2.setColor(color);
         tempBitmap.eraseColor(Color.TRANSPARENT);
         wallpath.reset();
+        System.out.println("xy = "+xy[0][0]+" xy[0][1]"+xy[0][1]);
         wallpath.moveTo(xy[0][0], xy[0][1]);
         for(int i = xy.length - 1; i >= 0; i--) {
             wallpath.lineTo(xy[i][0], xy[i][1]);
@@ -65,7 +66,6 @@ public class Polygon {
 
         tempCanvas.drawPath(wallpath, paint);
         tempCanvas.drawPath(wallpath, paint2);
-
         return tempBitmap;
     }
 
@@ -75,7 +75,6 @@ public class Polygon {
 
     public void checkArrow(Polygon p,boolean enabled) {
         needArrows = enabled;
-        Log.e(TAG,"DRAW arrows = "+enabled);
 
         for(int i = 0; i < skills.length; i++) {
             arrows[i] = skills[i] >= p.skills[i];

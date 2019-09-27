@@ -30,10 +30,10 @@ import java.util.List;
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.utils.Polygon;
 
-public class AboutTab extends DialogFragment implements View.OnTouchListener {
+public class SkillsTab extends DialogFragment implements View.OnTouchListener {
 
     private String[] header = {"Мои показатели", "Рост показателей", "Сравнение с общими"};
-    private int[] colors = {0xff00BFFF, 0xffff3421};//blue, red
+    private int[] colors = new int[2];//blue, red
     private Bitmap up;
     private Bitmap down;
     private RelativeLayout InfoMain;
@@ -54,6 +54,8 @@ public class AboutTab extends DialogFragment implements View.OnTouchListener {
         InfoMain.setOnTouchListener(this);
         imageView = v.findViewById(R.id.android2);
         textView = v.findViewById(R.id.logo);
+        colors[0] = getResources().getColor(R.color.skill_1);
+        colors[1] = getResources().getColor(R.color.skill_2);
         drawPolygon();
         return v;
     }
@@ -166,34 +168,23 @@ public class AboutTab extends DialogFragment implements View.OnTouchListener {
         super.onResume();
     }
 
-    private void drawPolygon() {
-        int size = 1;
-
+    public void drawPolygon() {
+        int size = graphs.size() + 1;
         textView.setText(header[currentBlockId]);
-
-        if (graphs.size() > 0 && currentBlockId == 0) {
-            size = 2;
-        } else if (graphs.size() > 1 && currentBlockId > 0) {
-            size = 3;
-        }
-
         Drawable[] layers = new Drawable[size];
-        layers[size - 1] = getResources().getDrawable(R.drawable.skills, null);
-
+        layers[0] = getResources().getDrawable(R.drawable.skills, null);
         if (size > 1) {
             Polygon p = graphs.get(0);
-            p.up = up;
-            p.down = down;
-            p.checkArrow(p, false);
+            Polygon p2 = graphs.get(1);
 
-            if (size == 3) {
-                Polygon p2 = graphs.get(currentBlockId);
-                p.checkArrow(p2, true);
-                p2.up = up;
-                p2.down = down;
-                layers[1] = new BitmapDrawable(getResources(), p2.getBitmap(colors[1]));
-            }
-            layers[0] = new BitmapDrawable(getResources(), p.getBitmap(colors[0]));
+            p.up = up;
+            p2.up = up;
+
+            p.down = down;
+            p2.down = down;
+
+            layers[1] = new BitmapDrawable(getResources(), p.getBitmap(colors[0]));
+            layers[2] = new BitmapDrawable(getResources(), p2.getBitmap(colors[1]));
         }
 
         LayerDrawable layerDrawable = new LayerDrawable(layers);
@@ -204,9 +195,9 @@ public class AboutTab extends DialogFragment implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-       // if (!graphs.get(currentBlockId).onTouch(view,motionEvent)) {
-         //   switchBlock();
-       // }
+        // if (!graphs.get(currentBlockId).onTouch(view,motionEvent)) {
+        //   switchBlock();
+        // }
         return false;
     }
 }

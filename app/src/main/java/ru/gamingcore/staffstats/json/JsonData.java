@@ -39,7 +39,6 @@ public class JsonData {
         try {
             JSONArray violations = obj.getJSONArray("violation_list");
             list_violation.violations = new ArrayList<>(violations.length());
-
             for (int j = 0; j < violations.length(); j++) {
                 JSONObject data = violations.getJSONObject(j);
                 Violation violation = new Violation();
@@ -47,7 +46,6 @@ public class JsonData {
                 violation.violation_name = data.getString("violation_name");
                 list_violation.violations.add(violation);
             }
-
         } catch (JSONException e) {
             Log.e(TAG, "JSONException " + e.getLocalizedMessage());
             return null;
@@ -59,11 +57,8 @@ public class JsonData {
         Allow_scan allow_scan = new Allow_scan();
         try {
             String tmp = obj.getString("Scan");
-
             byte[] buf = Base64.decode(tmp, Base64.NO_WRAP);
-
             allow_scan.scan = BitmapFactory.decodeByteArray(buf, 0, buf.length);
-
         } catch (JSONException e) {
             Log.e(TAG, "JSONException " + e.getLocalizedMessage());
             return null;
@@ -83,4 +78,28 @@ public class JsonData {
         return upload_data;
     }
 
+    public static Emp_rating ParseRating(JSONObject obj) {
+        Emp_rating emp_rating = new Emp_rating();
+        try {
+            for (int i = 0;i < 12;i++) {
+                emp_rating.month[i] = obj.getString("month_"+(i+1));
+                emp_rating.knld[i] = obj.getString("knld_"+(i+1));
+                emp_rating.soc[i] = obj.getString("soc_"+(i+1));
+                emp_rating.resp[i] = obj.getString("resp_"+(i+1));
+                emp_rating.activ[i] = obj.getString("activ_"+(i+1));
+                emp_rating.innov[i] = obj.getString("innov_"+(i+1));
+                emp_rating.ent[i] = obj.getString("ent_"+(i+1));
+            }
+            emp_rating.avr_knld = obj.getString("avr_knld");
+            emp_rating.avr_soc = obj.getString("avr_soc");
+            emp_rating.avr_resp = obj.getString("avr_resp");
+            emp_rating.avr_activ = obj.getString("avr_activ");
+            emp_rating.avr_innov = obj.getString("avr_innov");
+            emp_rating.avr_ent = obj.getString("avr_ent");
+        } catch (JSONException e) {
+            Log.e(TAG, "JSONException " + e.getLocalizedMessage());
+            return null;
+        }
+        return emp_rating;
+    }
 }

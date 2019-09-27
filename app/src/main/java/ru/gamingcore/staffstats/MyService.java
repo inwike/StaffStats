@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import ru.gamingcore.staffstats.json.Allow_scan;
 import ru.gamingcore.staffstats.json.Emp_data;
+import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.json.List_violation;
 import ru.gamingcore.staffstats.network.ServerWork;
 
@@ -26,19 +27,28 @@ public class MyService extends Service {
     private final LocalBinder localBinder = new LocalBinder();
 
     public Emp_data emp_data = new Emp_data();
+    public Emp_rating emp_rating = new Emp_rating();
     public Allow_scan allow_scan = new Allow_scan();
     public ServerWork serverWork = new ServerWork();
     private List_violation list_violation = new List_violation();
     private LocationManager locationManager;
     private MyLocationListener locationListener;
-    private ErrorListener errorListener;
+    private EventListener eventListener;
     private ServerWork.Listener listener = new ServerWork.Listener() {
 
         @Override
         public void onExec_data(Emp_data emp_data) {
             MyService.this.emp_data = emp_data;
-            if (errorListener != null) {
-                errorListener.onFinish();
+            if (eventListener != null) {
+                eventListener.onFinish();
+            }
+        }
+
+        @Override
+        public void onEmp_rating(Emp_rating emp_rating) {
+            MyService.this.emp_rating = emp_rating;
+            if (eventListener != null) {
+                eventListener.onUpdate(emp_rating);
             }
         }
 
@@ -57,16 +67,16 @@ public class MyService extends Service {
 
         @Override
         public void onUpload() {
-            if (errorListener != null) {
-                errorListener.onUpload();
+            if (eventListener != null) {
+                eventListener.onUpload();
             }
         }
 
         @Override
         public void onError() {
             Log.e(TAG, "onError");
-            if (errorListener != null) {
-                errorListener.onError();
+            if (eventListener != null) {
+                eventListener.onError();
             }
         }
     };
@@ -76,8 +86,8 @@ public class MyService extends Service {
         serverWork.setListener(listener);
     }
 
-    public void setErrorListener(ErrorListener errorListener) {
-        this.errorListener = errorListener;
+    public void setEventListener(EventListener eventListener) {
+        this.eventListener = eventListener;
     }
 
     @Override
@@ -140,9 +150,10 @@ public class MyService extends Service {
         }
     }
 
-    public interface ErrorListener {
+    public interface EventListener {
         void onError();
         void onUpload();
+        void onUpdate(Emp_rating emp_rating);
         void onFinish();
     }
 

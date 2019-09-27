@@ -21,6 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 import ru.gamingcore.staffstats.MyService;
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.finger.AuthorizeDialog;
+import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.tabs.ScreenSlidePagerAdapter;
 
 import static ru.gamingcore.staffstats.utils.Avatar.setAvatar;
@@ -47,9 +48,10 @@ public class MainActivity extends AppCompatActivity {
     private ServiceConnection sConn = new ServiceConnection() {
         public void onServiceConnected(ComponentName name, IBinder binder) {
             service = ((MyService.LocalBinder) binder).getService();
-            service.setErrorListener(errorListener);
-            service.serverWork.listViolation();
+            service.setEventListener(eventListener);
             service.serverWork.execData();
+            service.serverWork.empRating();
+
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(
                         new String[]{
@@ -159,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private MyService.ErrorListener errorListener = new MyService.ErrorListener() {
+    private MyService.EventListener eventListener = new MyService.EventListener() {
         @Override
         public void onError() {
         }
@@ -169,6 +171,11 @@ public class MainActivity extends AppCompatActivity {
             if (photo != null && tmp != null) {
                 photo.setImageBitmap(tmp);
             }
+        }
+
+        @Override
+        public void onUpdate(Emp_rating emp_rating) {
+            pagerAdapter.updateSkills(emp_rating);
         }
 
         @Override

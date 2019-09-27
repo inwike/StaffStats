@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import ru.gamingcore.staffstats.json.Allow_scan;
 import ru.gamingcore.staffstats.json.Emp_data;
+import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.json.JsonData;
 import ru.gamingcore.staffstats.json.List_violation;
 import ru.gamingcore.staffstats.json.Upload_data;
@@ -28,6 +29,8 @@ public class ServerWork {
 
     public interface Listener {
         void onExec_data(Emp_data emp_data);
+
+        void onEmp_rating(Emp_rating emp_rating);
 
         void onAllow_scan(Allow_scan allow_scan);
 
@@ -67,6 +70,13 @@ public class ServerWork {
         dataAsync.execute();
     }
 
+    public void empRating() {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setCommand(GetJsonAsync.EMP_RATING);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.execute();
+    }
+
     public void setPhoto(Bitmap bitmap) {
         GetJsonAsync dataAsync = setRequest();
         dataAsync.setMethod(GetJsonAsync.POST);
@@ -92,6 +102,7 @@ public class ServerWork {
 
                 JSONObject obj = new JSONObject(result);
                 Emp_data emp_data = JsonData.ParseExec(obj);
+                Emp_rating emp_rating = JsonData.ParseRating(obj);
                 Upload_data upload_data = JsonData.ParseUpload(obj);
 
                 List_violation list_violation = JsonData.ParseViolation(obj);
@@ -99,6 +110,10 @@ public class ServerWork {
 
                 if (upload_data != null) {
                     listener.onUpload();
+                    return;
+                }
+                if (emp_rating != null) {
+                    listener.onEmp_rating(emp_rating);
                     return;
                 }
                 if (emp_data != null) {

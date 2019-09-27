@@ -5,5 +5,13 @@
     <color name="colorAccent">#D81B60</color>
     <color name="splashBg">#Fac0c0c0</color>
     <color name="colorRed">#FFFF0000</color>
+    <color name="color_1">#303F9F</color>
+    <color name="color_2">#DDA0DD</color>
+    <color name="color_3">#228B22</color>
+    <color name="color_4">#FFFF00</color>
+    <color name="color_5">#008080</color>
+    <color name="color_6">#F4A460</color>
+    <color name="skill_1">0xff00BFFF</color>
+    <color name="skill_2">0xffff3421</color>
 
 </resources>
