@@ -88,6 +88,15 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/hint_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/skill_item_6"
+            android:gravity="start"
+            android:text="@string/ent"
+            android:textSize="14sp" />
+
+        <TextView
             android:id="@+id/hint_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,6 +104,7 @@
             android:gravity="start"
             android:text="@string/activ"
             android:textSize="14sp" />
+
 
         <TextView
             android:id="@+id/hint_5"
@@ -105,14 +115,6 @@
             android:text="@string/innov"
             android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/hint_6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/skill_item_6"
-            android:gravity="start"
-            android:text="@string/ent"
-            android:textSize="14sp" />
     </LinearLayout>
 
 

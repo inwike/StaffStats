@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -29,10 +30,9 @@ import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.utils.Polygon;
 
-public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
+public class SkillsTab2 extends DialogFragment implements View.OnClickListener,View.OnTouchListener {
 
     public Emp_rating emp_rating = new Emp_rating();
-    private String[] header = {"Мои показатели", "Рост показателей", "Сравнение с общими"};
     private int[] colors = {0xff00BFFF, 0xffff3421};//blue, red
     private Bitmap up;
     private Bitmap down;
@@ -60,7 +60,6 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
         return v;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +74,7 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
                 down, 10, 15, false);
     }
 
-    public void onCancel(DialogInterface dialog) {
+    public void onCancel(@NonNull DialogInterface dialog) {
         super.onCancel(dialog);
     }
 
@@ -167,7 +166,7 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
         super.onResume();
     }
 
-    public void drawPolygon() {
+    void drawPolygon() {
         int size = 1;
         if (emp_rating.getSize() > 1) {
             size = 3;
@@ -199,5 +198,10 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switchBlock();
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        return false;
     }
 }

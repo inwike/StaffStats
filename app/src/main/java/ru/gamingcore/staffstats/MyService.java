@@ -15,10 +15,8 @@ import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
 
-import ru.gamingcore.staffstats.json.Allow_scan;
 import ru.gamingcore.staffstats.json.Emp_data;
 import ru.gamingcore.staffstats.json.Emp_rating;
-import ru.gamingcore.staffstats.json.List_violation;
 import ru.gamingcore.staffstats.network.ServerWork;
 
 public class MyService extends Service {
@@ -28,9 +26,7 @@ public class MyService extends Service {
 
     public Emp_data emp_data = new Emp_data();
     public Emp_rating emp_rating = new Emp_rating();
-    public Allow_scan allow_scan = new Allow_scan();
     public ServerWork serverWork = new ServerWork();
-    private List_violation list_violation = new List_violation();
     private LocationManager locationManager;
     private MyLocationListener locationListener;
     private EventListener eventListener;
@@ -50,19 +46,6 @@ public class MyService extends Service {
             if (eventListener != null) {
                 eventListener.onUpdate(emp_rating);
             }
-        }
-
-        @Override
-        public void onAllow_scan(Allow_scan allow_scan) {
-           /* Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            MyService.this.allow_scan = allow_scan;
-            startActivity(intent);*/
-        }
-
-        @Override
-        public void onList_violation(List_violation list_violation) {
-            MyService.this.list_violation = list_violation;
         }
 
         @Override

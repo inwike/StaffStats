@@ -34,39 +34,6 @@ public class JsonData {
         return emp_data;
     }
 
-    public static List_violation ParseViolation(JSONObject obj) {
-        List_violation list_violation = new List_violation();
-        try {
-            JSONArray violations = obj.getJSONArray("violation_list");
-            list_violation.violations = new ArrayList<>(violations.length());
-            for (int j = 0; j < violations.length(); j++) {
-                JSONObject data = violations.getJSONObject(j);
-                Violation violation = new Violation();
-                violation.violation_id = data.getString("violation_id");
-                violation.violation_name = data.getString("violation_name");
-                list_violation.violations.add(violation);
-            }
-        } catch (JSONException e) {
-            Log.e(TAG, "JSONException " + e.getLocalizedMessage());
-            return null;
-        }
-        return list_violation;
-    }
-
-    public static Allow_scan ParseAllowScan(JSONObject obj) {
-        Allow_scan allow_scan = new Allow_scan();
-        try {
-            String tmp = obj.getString("Scan");
-            byte[] buf = Base64.decode(tmp, Base64.NO_WRAP);
-            allow_scan.scan = BitmapFactory.decodeByteArray(buf, 0, buf.length);
-        } catch (JSONException e) {
-            Log.e(TAG, "JSONException " + e.getLocalizedMessage());
-            return null;
-        }
-        return allow_scan;
-    }
-
-
     public static Upload_data ParseUpload(JSONObject obj) {
         Upload_data upload_data = new Upload_data();
         try {

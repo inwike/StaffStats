@@ -46,7 +46,6 @@ public class Polygon {
         }
     }
 
-
     public Bitmap getBitmap(int color) {
         paint.setColor(color - 0xF0000000);
         paint2.setColor(color);
@@ -66,10 +65,6 @@ public class Polygon {
         tempCanvas.drawPath(wallpath, paint);
         tempCanvas.drawPath(wallpath, paint2);
         return tempBitmap;
-    }
-
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        return false;
     }
 
     public void checkArrow(Polygon p, boolean enabled) {

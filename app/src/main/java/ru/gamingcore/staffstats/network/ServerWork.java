@@ -6,11 +6,9 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ru.gamingcore.staffstats.json.Allow_scan;
 import ru.gamingcore.staffstats.json.Emp_data;
 import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.json.JsonData;
-import ru.gamingcore.staffstats.json.List_violation;
 import ru.gamingcore.staffstats.json.Upload_data;
 import ru.gamingcore.staffstats.utils.ImageUtil;
 
@@ -41,9 +39,6 @@ public class ServerWork {
                 Emp_rating emp_rating = JsonData.ParseRating(obj);
                 Upload_data upload_data = JsonData.ParseUpload(obj);
 
-                List_violation list_violation = JsonData.ParseViolation(obj);
-                Allow_scan allow_scan = JsonData.ParseAllowScan(obj);
-
                 if (upload_data != null) {
                     listener.onUpload();
                     return;
@@ -54,14 +49,6 @@ public class ServerWork {
                 }
                 if (emp_data != null) {
                     listener.onExec_data(emp_data);
-                    return;
-                }
-                if (list_violation != null) {
-                    listener.onList_violation(list_violation);
-                    return;
-                }
-                if (allow_scan != null) {
-                    listener.onAllow_scan(allow_scan);
                     return;
                 }
             } catch (JSONException e) {
@@ -139,23 +126,10 @@ public class ServerWork {
 
         void onEmp_rating(Emp_rating emp_rating);
 
-        void onAllow_scan(Allow_scan allow_scan);
-
-        void onList_violation(List_violation list_violation);
-
         void onError();
 
         void onUpload();
     }
 
-/*
-    //(c) http://www.pocketmagic.net/?p=1662
-    private String m_szDevIDShort = "35" + //we make this look like a valid IMEI
-            Build.BOARD.length() % 10 + Build.BRAND.length() % 10 +
-            Build.CPU_ABI.length() % 10 + Build.DEVICE.length() % 10 +
-            Build.DISPLAY.length() % 10 + Build.HOST.length() % 10 +
-            Build.ID.length() % 10 + Build.MANUFACTURER.length() % 10 +
-            Build.MODEL.length() % 10 + Build.PRODUCT.length() % 10 +
-            Build.TAGS.length() % 10 + Build.TYPE.length() % 10 +
-            Build.USER.length() % 10; //13 digits */
+
 }
