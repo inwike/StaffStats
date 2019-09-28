@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:id="@+id/header"
-        android:background="@color/splashBg"
+        android:background="@drawable/layout_bg_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -28,8 +28,9 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/skill_item_1"
                 android:gravity="start"
+                android:textColor="@android:color/white"
                 android:text="@string/knld"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/hint_3"
@@ -37,24 +38,26 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/skill_item_3"
                 android:gravity="start"
+                android:textColor="@android:color/white"
                 android:text="@string/resp"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/hint_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/skill_item_2"
+                android:textColor="@android:color/white"
                 android:gravity="start"
                 android:text="@string/soc"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -62,27 +65,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/skill_item_4"
+                android:textColor="@android:color/white"
                 android:gravity="start"
                 android:text="@string/activ"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/hint_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
                 android:drawableStart="@drawable/skill_item_5"
                 android:gravity="start"
                 android:text="@string/innov"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/hint_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/skill_item_6"
+                android:textColor="@android:color/white"
                 android:gravity="start"
                 android:text="@string/ent"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -91,7 +97,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/header"
-        android:background="@color/splashBg">
+        android:background="@color/colorPrimaryDark2"
+        >
 
         <ListView
             android:layout_marginTop="30dp"

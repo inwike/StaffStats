@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         String bs = Base64.encodeToString(data, Base64.NO_WRAP);
                         if(service!= null) {
                             service.serverWork.Test(bs);
+
                         }
 
                     } catch (NullPointerException ex) {

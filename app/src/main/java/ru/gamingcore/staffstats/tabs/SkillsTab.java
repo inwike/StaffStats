@@ -35,7 +35,7 @@ import ru.gamingcore.staffstats.utils.Polygon;
 public class SkillsTab extends DialogFragment {
 
     public List<Polygon> graphs = new ArrayList<>();
-    private String[] header = {"По организации"};
+    private String[] header = {"По специальности"};
     private int[] colors = new int[2];//blue, red
     private Bitmap up;
     private Bitmap down;
@@ -49,6 +49,15 @@ public class SkillsTab extends DialogFragment {
     private TextView[] view = new TextView[6];
     private String[] help = {"knld", "soc", "resp", "activ", "innov", "ent"};
 
+
+    public void drawYellow(int pos) {
+        for (int i=0;i < 6; i++) {
+            view[i].setTextColor(0xFFFFFACD);
+            if(i == pos) {
+                view[i].setTextColor(0xFFFFD700);
+            }
+        }
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,6 +80,7 @@ public class SkillsTab extends DialogFragment {
         view[3] = v.findViewById(R.id.hint_4);
         view[4] = v.findViewById(R.id.hint_5);
         view[5] = v.findViewById(R.id.hint_6);
+        drawYellow(-1);
 
         RelativeLayout linearLayout = v.findViewById(R.id.bottom_sheet);
         sheetBehavior = BottomSheetBehavior.from(linearLayout);
@@ -92,6 +102,7 @@ public class SkillsTab extends DialogFragment {
                             params.setMargins(0, 25, 0, 0);
                             view[t].setLayoutParams(params);
                         }
+                        drawYellow(0);
                         break;
                     case BottomSheetBehavior.STATE_COLLAPSED:
                         Log.e("err", "STATE_COLLAPSED");
@@ -104,6 +115,7 @@ public class SkillsTab extends DialogFragment {
                             params.setMargins(0, 0, 0, 0);
                             view[t].setLayoutParams(params);
                         }
+                        drawYellow(-1);
                         break;
                     case BottomSheetBehavior.STATE_DRAGGING:
                         Log.e("err", "STATE_DRAGGING");
@@ -137,6 +149,7 @@ public class SkillsTab extends DialogFragment {
                 public void onClick(View view) {
                     if(sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
                         adapterDetail.Update(help[t]);
+                        drawYellow(t);
                         adapterDetail.notifyDataSetChanged();
                     }
                 }

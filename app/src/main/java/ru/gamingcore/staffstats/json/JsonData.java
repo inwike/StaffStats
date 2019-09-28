@@ -101,6 +101,7 @@ public class JsonData {
                 JSONArray tmparr = obj.getJSONArray("Обучение");
                 for (int j = 0; j < tmparr.length();j++) {
                     a.train.add(tmparr.getString(j));
+                    a.url.add("http://gamingcore.ru/");
                 }
                 result.add(a);
             }

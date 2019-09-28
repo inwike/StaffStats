@@ -36,8 +36,12 @@ public class AvailAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getChild(int i, int i1) {
+    public String getChild(int i, int i1) {
         return values.get(i).train.get(i1);
+    }
+
+    public String getChildUrl(int i, int i1) {
+        return values.get(i).url.get(i1);
     }
 
     @Override

@@ -33,7 +33,7 @@ import ru.gamingcore.staffstats.utils.Polygon;
 public class SkillsTab2 extends DialogFragment implements View.OnClickListener,View.OnTouchListener {
 
     public Emp_rating emp_rating = new Emp_rating();
-    private int[] colors = {0xff00BFFF, 0xffff3421};//blue, red
+    private int[] colors = new int[2];//blue, red
     private Bitmap up;
     private Bitmap down;
     private RelativeLayout InfoMain;
@@ -53,6 +53,8 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener,V
 
         InfoMain = v.findViewById(R.id.about);
         InfoMain.setOnClickListener(this);
+        colors[0] = getResources().getColor(R.color.skill_1);
+        colors[1] = getResources().getColor(R.color.skill_2);
         imageView = v.findViewById(R.id.android2);
         logo1 = v.findViewById(R.id.logo1);
         logo2 = v.findViewById(R.id.logo2);

@@ -16,13 +16,14 @@
 
         <RelativeLayout
             android:id="@+id/info"
+            android:background="@drawable/layout_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/photo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
@@ -33,6 +34,7 @@
 
             <TextView
                 android:id="@+id/lastname"
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/photo"
@@ -45,6 +47,7 @@
                 android:id="@+id/firstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@id/lastname"
                 android:textSize="22sp"
@@ -59,6 +62,7 @@
                 android:layout_below="@id/lastname"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
+                android:visibility="gone"
                 android:textSize="22sp"
                 android:text="@string/def_secondname"
                 android:textStyle="bold" />
@@ -78,7 +82,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/type"
-                android:layout_marginStart="5dp"
                 android:textSize="20sp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
@@ -102,7 +105,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/organization"
                 android:visibility="gone"
-                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
                 android:text="@string/def_department" />
@@ -112,7 +114,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/department"
-                android:layout_marginStart="5dp"
                 android:textSize="18sp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
@@ -125,10 +126,15 @@
                 android:layout_below="@id/position"
                 android:textSize="20sp"
                 android:visibility="gone"
-                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
                 android:text="@string/def_schedule" />
+
+            <LinearLayout
+                android:layout_below="@id/photo"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                />
 
         </RelativeLayout>
 
@@ -139,11 +145,4 @@
             android:layout_below="@id/info" />
 
     </RelativeLayout>
-
-    <TextureView
-        android:id="@+id/texture"
-        android:visibility="visible"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
 </LinearLayout>
