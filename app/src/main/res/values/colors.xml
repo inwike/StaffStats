@@ -7,12 +7,12 @@
     <color name="splashBg">#Fac0c0c0</color>
     <color name="colorRed">#FFFF0000</color>
 
-    <color name="color_1">#FF7F50</color>
-    <color name="color_2">#D2691E</color>
-    <color name="color_3">#B8860B</color>
-    <color name="color_4">#8B4513</color>
-    <color name="color_5">#FF8C00</color>
-    <color name="color_6">#F4A460</color>
+    <color name="color_1">#000080</color>
+    <color name="color_2">#800000</color>
+    <color name="color_3">#C71585</color>
+    <color name="color_4">#808000</color>
+    <color name="color_5">#B8860B</color>
+    <color name="color_6">#2F4F4F</color>
     <color name="skill_1">#ff00BFFF</color>
     <color name="skill_2">#32CD32</color>
 

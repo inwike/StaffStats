@@ -6,19 +6,20 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     app:behavior_hideable="false"
-    app:behavior_peekHeight="80dp"
+    app:behavior_peekHeight="100dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <LinearLayout
         android:id="@+id/header"
         android:background="@drawable/layout_bg_2"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
@@ -54,9 +55,9 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/right"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 

@@ -44,8 +44,18 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener,V
 
 
     private int currentBlockId = 10;
+    private TextView[] view = new TextView[6];
 
     private boolean animating = false;
+
+    public void drawYellow(int pos) {
+        for (int i=0;i < 6; i++) {
+            view[i].setTextColor(0xFFFFFACD);
+            if(i == pos) {
+                view[i].setTextColor(0xFFFFD700);
+            }
+        }
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,6 +67,14 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener,V
         colors[1] = getResources().getColor(R.color.skill_2);
         imageView = v.findViewById(R.id.android2);
         logo1 = v.findViewById(R.id.logo1);
+
+        view[0] = v.findViewById(R.id.hint_1);
+        view[1] = v.findViewById(R.id.hint_2);
+        view[2] = v.findViewById(R.id.hint_3);
+        view[3] = v.findViewById(R.id.hint_4);
+        view[4] = v.findViewById(R.id.hint_5);
+        view[5] = v.findViewById(R.id.hint_6);
+        drawYellow(-1);
         logo2 = v.findViewById(R.id.logo2);
         drawPolygon();
         return v;
