@@ -16,6 +16,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        repositories {
+            maven { url 'https://jitpack.io' }
+        }
     }
 }
 
@@ -30,4 +33,5 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.exifinterface:exifinterface:1.1.0-beta01'
     implementation 'com.google.zxing:core:3.4.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

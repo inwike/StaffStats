@@ -32,6 +32,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     public void updateAvails(List<Avail> avails) {
         ((AvailTab) fragments[2]).adapter.values = avails;
         ((AvailTab) fragments[2]).adapter.notifyDataSetChanged();
+        ((AvailTab) fragments[2]).AddValuesToPIEENTRY();
     }
 
     public void updateSkills(Emp_rating emp_rating) {

@@ -37,6 +37,7 @@ import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static int PERMISSION_REQUEST_CODE = 123456;
     SurfaceView sv;
+    ProgressBar pb;
 
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
@@ -228,13 +230,14 @@ public class MainActivity extends AppCompatActivity {
 
     private ServiceConnection sConn = new ServiceConnection() {
         public void onServiceConnected(ComponentName name, IBinder binder) {
+            pb.setVisibility(View.GONE);
+            main.setVisibility(View.VISIBLE);
             service = ((MyService.LocalBinder) binder).getService();
             service.setEventListener(eventListener);
             service.serverWork.execData();
             service.serverWork.empRating();
             service.serverWork.empDetails();
             service.serverWork.empAvail();
-
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                     checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED &&
@@ -447,11 +450,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final Intent intent = new Intent(this, MyService.class);
-        bindService(intent, sConn, BIND_AUTO_CREATE);
         sv = new SurfaceView(this);
-
         main = findViewById(R.id.main);
+        pb = findViewById(R.id.pb);
         firstname = findViewById(R.id.firstname);
         lastname = findViewById(R.id.lastname);
         secondname = findViewById(R.id.secondname);
@@ -473,7 +474,6 @@ public class MainActivity extends AppCompatActivity {
     private void Authorize() {
         AuthorizeDialog dialog = new AuthorizeDialog();
         dialog.setCancelable(false);
-        final Intent intent = new Intent(this, MyService.class);
 
         getSupportFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
             @Override
@@ -481,7 +481,6 @@ public class MainActivity extends AppCompatActivity {
                 super.onFragmentViewDestroyed(fm, f);
                 startMain();
                 fm.unregisterFragmentLifecycleCallbacks(this);
-                bindService(intent, sConn, BIND_AUTO_CREATE);
             }
         }, false);
 
@@ -500,8 +499,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startMain() {
-        main.setVisibility(View.VISIBLE);
-
+        final Intent intent = new Intent(this, MyService.class);
+        bindService(intent, sConn, BIND_AUTO_CREATE);
+        pb.setVisibility(View.VISIBLE);
     }
 
     @Override

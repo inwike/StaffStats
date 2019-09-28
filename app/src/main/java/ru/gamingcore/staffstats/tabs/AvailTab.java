@@ -23,6 +23,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +42,11 @@ public class AvailTab extends DialogFragment {
 
     public AvailAdapter adapter;
     private ExpandableListView listView;
+
+    private PieChart pieChart ;
+    private List<PieEntry> entries ;
+    private PieDataSet pieDataSet ;
+    private PieData pieData ;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,8 +74,13 @@ public class AvailTab extends DialogFragment {
             }
         });
 
+        entries = new ArrayList<>();
+        pieChart = v.findViewById(R.id.chart1);
         adapter = new AvailAdapter(getContext());
         listView.setAdapter(adapter);
+
+        AddValuesToPIEENTRY();
+
         return v;
     }
 
@@ -101,4 +118,19 @@ public class AvailTab extends DialogFragment {
         }
         super.onResume();
     }
+
+    public void AddValuesToPIEENTRY(){
+        for(int i = 0; i< adapter.values.size();i++) {
+            entries.add(new PieEntry(33.3f, i));
+        }
+        if (entries.size() > 0) {
+            pieDataSet = new PieDataSet(entries, "");
+            pieData = new PieData(pieDataSet);
+            pieDataSet.setColors(getContext().getResources().getColor(R.color.color_3),
+                    getContext().getResources().getColor(R.color.color_4),
+                    getContext().getResources().getColor(R.color.color_5));
+            pieChart.setData(pieData);
+        }
+    }
+
 }
