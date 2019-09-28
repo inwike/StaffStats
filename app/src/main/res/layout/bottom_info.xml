@@ -94,9 +94,10 @@
         android:background="@color/splashBg">
 
         <ListView
+            android:layout_marginTop="30dp"
             android:id="@+id/lv"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="300dp"
             android:divider="#b5b5b5"
             android:dividerHeight="1dp"
             android:fastScrollEnabled="true"

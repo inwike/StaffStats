@@ -38,6 +38,7 @@ public class Avatar {
             in.close();
 
             OutputStream out = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            image = Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getWidth());
 
             image.compress(Bitmap.CompressFormat.JPEG, quality, out);
 

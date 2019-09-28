@@ -1,6 +1,7 @@
 package ru.gamingcore.staffstats.activity;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Size;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int SET_AVATAR_CODE = 777;
     private static final int sImageFormat = ImageFormat.JPEG;
     private static final int REQUEST_CAMERA_PERMISSION = 200;
+    private static final int ACTION_CROP_FROM_CAMERA = 22222;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static int PERMISSION_REQUEST_CODE = 123456;
     SurfaceView sv;
@@ -231,17 +234,26 @@ public class MainActivity extends AppCompatActivity {
             service.serverWork.empDetails();
             service.serverWork.empAvail();
 
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED &&
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(
                         new String[]{
                                 Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_COARSE_LOCATION
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
                         },
                         PERMISSION_REQUEST_CODE);
             } else {
                 service.initLocation();
             }
         }
+
+
+
+
 
         public void onServiceDisconnected(ComponentName name) {
             service = null;
@@ -457,7 +469,6 @@ public class MainActivity extends AppCompatActivity {
         Authorize();
     }
 
-    /* Authorize to app */
     private void Authorize() {
         AuthorizeDialog dialog = new AuthorizeDialog();
         dialog.setCancelable(false);
@@ -501,13 +512,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getAvatar(View view) {
-        service.serverWork.Test("teteteteteretererete");
-
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        //startActivityForResult(Intent.createChooser(intent, "Select avatar"), SET_AVATAR_CODE);
+        startActivityForResult(Intent.createChooser(intent, "Select avatar"), SET_AVATAR_CODE);
     }
-
 
     class UpdateAsync extends AsyncTask<Uri, Void, Bitmap> {
 
