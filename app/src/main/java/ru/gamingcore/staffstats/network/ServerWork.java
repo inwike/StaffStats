@@ -1,6 +1,7 @@
 package ru.gamingcore.staffstats.network;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,12 +58,12 @@ public class ServerWork {
                 List<Detail> details = JsonData.ParseDetail(array);
                 List<String> avails = JsonData.ParseAvail(array);
 
-                if (avails != null) {
+                if (avails != null && avails.size() > 0) {
                     listener.onAvails(avails);
                     return;
                 }
 
-                if (details != null) {
+                if (details != null && details.size() > 0) {
                     listener.onDetails(details);
                     return;
                 }
@@ -117,11 +118,11 @@ public class ServerWork {
 
     public void empDetails() {
         empDetailsKnld();
-        empDetailsSoc();
-        empDetailsResp();
-        empDetailsActiv();
+      //  empDetailsSoc();
+        //empDetailsResp();
+        //empDetailsActiv();
         empDetailsInnov();
-        empDetailsEnt();
+        //empDetailsEnt();
 
     }
 

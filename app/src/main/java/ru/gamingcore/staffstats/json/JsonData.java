@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonData {
-    private static final String TAG = "INWIKE";
-
     public static Emp_data ParseExec(JSONObject obj) {
         Emp_data emp_data = new Emp_data();
         try {
@@ -29,7 +27,6 @@ public class JsonData {
             emp_data.type = obj.getString("type");
             emp_data.schedule = obj.getString("schedule");
         } catch (JSONException e) {
-            Log.e(TAG, "JSONException " + e.getLocalizedMessage());
             return null;
         }
         return emp_data;
@@ -40,7 +37,6 @@ public class JsonData {
         try {
             upload_data.loaded = obj.getString("loaded");
         } catch (JSONException e) {
-            Log.e(TAG, "JSONException " + e.getLocalizedMessage());
             return null;
         }
         return upload_data;
@@ -68,7 +64,6 @@ public class JsonData {
             emp_rating.size = 12;
 
         } catch (JSONException e) {
-            Log.e(TAG, "JSONException " + e.getLocalizedMessage());
             return null;
         }
         return emp_rating;
@@ -77,32 +72,35 @@ public class JsonData {
 
 
     public static List<Detail> ParseDetail(JSONArray arr) {
-        List<Detail> result= new ArrayList<>();
+        List<Detail> result = new ArrayList<>();
+
         try {
         for (int i = 0; i < arr.length(); i++) {
             JSONObject obj = arr.getJSONObject(i);
             Detail detail = new Detail();
-            detail. name = obj.getString("НаименованиеПоказателя");
-            detail. value = obj.getString("ЗначениеПоказателя");
+            detail.id = obj.getString("metod");
+            Log.e("detail.id",detail.id);
+
+            detail.name = obj.getString("НаименованиеПоказателя");
+            detail.value = obj.getString("ЗначениеПоказателя");
             result.add(detail);
         }
         } catch (JSONException e) {
-            Log.e(TAG, "JSONException " + e.getLocalizedMessage());
             return null;
         }
         return result;
     }
 
     public static List<String> ParseAvail(JSONArray arr) {
+
         List<String> result= new ArrayList<>();
         try {
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject obj = arr.getJSONObject(i);
-                String value = obj.getString("ЗначениеПоказателя");
+                String value = obj.getString("ЗначениеПоказателя22");
                 result.add(value);
             }
         } catch (JSONException e) {
-            Log.e(TAG, "JSONException " + e.getLocalizedMessage());
             return null;
         }
         return result;

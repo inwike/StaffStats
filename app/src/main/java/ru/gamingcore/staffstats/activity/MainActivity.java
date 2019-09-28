@@ -196,12 +196,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onDetail(List<Detail> details) {
+        public void onDetails(List<Detail> details) {
             pagerAdapter.updateHelp(details);
         }
 
         @Override
-        public void onAvails(List<String> avails) {
+        public void updateAvails(List<String> avails) {
             pagerAdapter.updateAvails(avails);
         }
 

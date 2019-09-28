@@ -31,7 +31,7 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
     public static final String EMP_DETAILS_ACTIV = "detail_activ";
     public static final String EMP_DETAILS_INNOV = "detail_innov";
     public static final String EMP_DETAILS_ENT = "detail_ent";
-    public static final String DEFAULT_DATE = "09.2019";
+    public static final String DEFAULT_DATE = "20190901";
     public static final String DATE_DETAIL = "date_detail";
 
 
@@ -114,7 +114,7 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
             }
 
         } catch (Exception e) {
-            Log.e(TAG, "Exception " + e.getLocalizedMessage());
+            Log.e(TAG, command+" = Exception " + e.getLocalizedMessage());
 
             if (listener != null) {
                 listener.onError();

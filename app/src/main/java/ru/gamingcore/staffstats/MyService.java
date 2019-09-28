@@ -54,14 +54,14 @@ public class MyService extends Service {
         @Override
         public void onDetails(List<Detail> details) {
             if (eventListener != null) {
-                eventListener.onDetail(details);
+                eventListener.onDetails(details);
             }
         }
 
         @Override
         public void onAvails(List<String> avails) {
             if (eventListener != null) {
-                eventListener.onAvails(avails);
+                eventListener.updateAvails(avails);
             }
         }
 
@@ -157,8 +157,8 @@ public class MyService extends Service {
 
         void onUpdate(Emp_rating emp_rating);
 
-        void onDetail(List<Detail> details);
-        void onAvails(List<String> avails);
+        void onDetails(List<Detail> details);
+        void updateAvails(List<String> avails);
 
         void onFinish();
     }
