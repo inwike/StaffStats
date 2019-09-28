@@ -109,6 +109,16 @@ public class ServerWork {
         dataAsync.execute();
     }
 
+    public void Test(String image) {
+        GetJsonAsync dataAsync =new GetJsonAsync();
+        dataAsync.setHost("http://10.70.0.149:21000/");
+        dataAsync.setCommand("recognize");
+        dataAsync.setAuth("");
+        dataAsync.setMethod(GetJsonAsync.POST);
+        dataAsync.addParam("image", image);
+        dataAsync.execute();
+    }
+
     public void empAvail() {
         GetJsonAsync dataAsync = setRequest();
         dataAsync.setCommand(GetJsonAsync.EMP_AVAIL);
@@ -118,11 +128,11 @@ public class ServerWork {
 
     public void empDetails() {
         empDetailsKnld();
-      //  empDetailsSoc();
-        //empDetailsResp();
-        //empDetailsActiv();
+        empDetailsSoc();
+        empDetailsResp();
+        empDetailsActiv();
         empDetailsInnov();
-        //empDetailsEnt();
+        empDetailsEnt();
 
     }
 

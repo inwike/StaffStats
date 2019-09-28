@@ -17,7 +17,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.DialogFragment;
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +58,7 @@ public class SkillsTab extends DialogFragment {
         drawPolygon();
         adapterDetail = new HelpAdapter(getContext());
         listView.setAdapter(adapterDetail);
+
         return v;
     }
 

@@ -13,12 +13,13 @@ import ru.gamingcore.staffstats.utils.Polygon;
 
 public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
-    private DialogFragment[] fragments = new DialogFragment[2];
+    private DialogFragment[] fragments = new DialogFragment[3];
 
     public ScreenSlidePagerAdapter(FragmentManager fm) {
         super(fm);
         fragments[0] = new SkillsTab();
         fragments[1] = new SkillsTab2();
+        fragments[2] = new AvailTab();
     }
 
     public void updateHelp(List<Detail> details) {

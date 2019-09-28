@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -57,14 +58,13 @@ import ru.gamingcore.staffstats.tabs.ScreenSlidePagerAdapter;
 
 import static android.hardware.camera2.CameraCharacteristics.LENS_FACING;
 import static android.hardware.camera2.CameraMetadata.LENS_FACING_BACK;
-import static android.hardware.camera2.CameraMetadata.LENS_FACING_FRONT;
 import static ru.gamingcore.staffstats.utils.Avatar.setAvatar;
 
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "INWIKE";
     private static final int SET_AVATAR_CODE = 777;
-    private static final int sImageFormat = ImageFormat.YUV_420_888;
+    private static final int sImageFormat = ImageFormat.JPEG;
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static int PERMISSION_REQUEST_CODE = 123456;
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             super.onCaptureCompleted(session, request, result);
         }
     };
+
     private final ImageReader.OnImageAvailableListener mOnImageAvailableListener =
             new ImageReader.OnImageAvailableListener() {
 
@@ -93,8 +94,11 @@ public class MainActivity extends AppCompatActivity {
                         if (img == null) throw new NullPointerException("cannot be null");
                         ByteBuffer buffer = img.getPlanes()[0].getBuffer();
                         byte[] data = new byte[buffer.remaining()];
-                        //TODO facccce
                         buffer.get(data);
+                        String bs = Base64.encodeToString(data, Base64.NO_WRAP);
+                        if(service!= null) {
+                            service.serverWork.Test(bs);
+                        }
 
                     } catch (NullPointerException ex) {
                         ex.printStackTrace();
@@ -129,8 +133,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             //open your camera here
-            System.out.println("onSurfaceTextureAvailable");
-
             openCamera(width, height);
         }
 
@@ -383,8 +385,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        stopBackgroundThread();
         super.onPause();
+        stopBackgroundThread();
     }
 
     private Size getFullScreenPreview(Size[] outputSizes, int width, int height) {
@@ -431,6 +433,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final Intent intent = new Intent(this, MyService.class);
+        bindService(intent, sConn, BIND_AUTO_CREATE);
         sv = new SurfaceView(this);
 
         main = findViewById(R.id.main);
@@ -471,9 +475,6 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "AuthorizeDialog");
     }
 
-    public void onClick(View view) {
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -487,8 +488,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void startMain() {
         main.setVisibility(View.VISIBLE);
-        final Intent intent = new Intent(this, MyService.class);
-        bindService(intent, sConn, BIND_AUTO_CREATE);
+
     }
 
     @Override
@@ -500,9 +500,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getAvatar(View view) {
+        service.serverWork.Test("teteteteteretererete");
+
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, "Select avatar"), SET_AVATAR_CODE);
+        //startActivityForResult(Intent.createChooser(intent, "Select avatar"), SET_AVATAR_CODE);
     }
 
 
