@@ -74,7 +74,6 @@ public class MyService extends Service {
 
         @Override
         public void onError() {
-            Log.e(TAG, "onError");
             if (eventListener != null) {
                 eventListener.onError();
             }
