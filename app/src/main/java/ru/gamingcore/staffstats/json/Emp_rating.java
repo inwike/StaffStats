@@ -39,7 +39,6 @@ public class Emp_rating {
         return values;
     }
 
-
     public double[] getAvr() {
         double[] values = new double[6];
         values[0] = Double.valueOf(avr_knld);

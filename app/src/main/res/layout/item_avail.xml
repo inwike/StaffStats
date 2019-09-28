@@ -7,6 +7,7 @@
     <TextView
         android:id="@+id/value"
         android:layout_gravity="start"
+        android:layout_marginStart="5dp"
         android:gravity="start"
         android:textSize="19sp"
         android:layout_width="match_parent"
