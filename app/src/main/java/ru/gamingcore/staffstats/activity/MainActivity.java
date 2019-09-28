@@ -20,9 +20,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import java.util.List;
+
 import ru.gamingcore.staffstats.MyService;
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.finger.AuthorizeDialog;
+import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.tabs.ScreenSlidePagerAdapter;
 
@@ -73,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
+        public void onDetail(List<Detail> details) {
+            pagerAdapter.updateHelp(details);
+        }
+
+        @Override
         public void onFinish() {
             firstname.setText(service.emp_data.firstname);
             lastname.setText(service.emp_data.lastname);
@@ -98,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
             service.setEventListener(eventListener);
             service.serverWork.execData();
             service.serverWork.empRating();
+            service.serverWork.empDetails();
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(

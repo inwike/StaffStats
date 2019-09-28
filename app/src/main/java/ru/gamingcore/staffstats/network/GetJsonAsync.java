@@ -24,6 +24,7 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
     public static final String UPLOAD_PHOTO = "upload_photo";
     public static final String ALLOW_SCAN = "allow_scan";
     public static final String EMP_RATING = "emp_rating";
+    public static final String EMP_DETAILS = "emp_details";
     public static final String CREATE_VIOLATION = "create_violation";
     public static final String LIST_VIOLATION = "list_violation";
     private static final String TAG = "INWIKE";

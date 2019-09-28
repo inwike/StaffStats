@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class JsonData {
     private static final String TAG = "INWIKE";
@@ -71,5 +72,23 @@ public class JsonData {
             return null;
         }
         return emp_rating;
+    }
+
+
+
+    public static List<Detail> ParseDetail(JSONArray arr) {
+        List<Detail> result= new ArrayList<>();
+        try {
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject obj = arr.getJSONObject(i);
+            Detail detail = new Detail();
+            detail. name = obj.getString("НаименованиеПоказателя");
+            detail. value = obj.getString("ЗначениеПоказателя");
+        }
+        } catch (JSONException e) {
+            Log.e(TAG, "JSONException " + e.getLocalizedMessage());
+            return null;
+        }
+        return result;
     }
 }

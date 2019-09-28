@@ -15,6 +15,9 @@ import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
 
+import java.util.List;
+
+import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.json.Emp_data;
 import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.network.ServerWork;
@@ -45,6 +48,13 @@ public class MyService extends Service {
             MyService.this.emp_rating = emp_rating;
             if (eventListener != null) {
                 eventListener.onUpdate(emp_rating);
+            }
+        }
+
+        @Override
+        public void onDetails(List<Detail> details) {
+            if (eventListener != null) {
+                eventListener.onDetail(details);
             }
         }
 
@@ -139,6 +149,8 @@ public class MyService extends Service {
         void onUpload();
 
         void onUpdate(Emp_rating emp_rating);
+
+        void onDetail(List<Detail> details);
 
         void onFinish();
     }

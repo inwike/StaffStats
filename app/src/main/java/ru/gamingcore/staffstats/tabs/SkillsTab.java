@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.gamingcore.staffstats.R;
+import ru.gamingcore.staffstats.adapter.HelpAdapter;
 import ru.gamingcore.staffstats.utils.Polygon;
 
 public class SkillsTab extends DialogFragment {
@@ -33,6 +35,8 @@ public class SkillsTab extends DialogFragment {
     private Bitmap down;
     private ImageView imageView;
     private TextView textView;
+    private ListView listView;
+    public HelpAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,9 +44,12 @@ public class SkillsTab extends DialogFragment {
 
         imageView = v.findViewById(R.id.android2);
         textView = v.findViewById(R.id.logo);
+        listView = v.findViewById(R.id.lv);
         colors[0] = getResources().getColor(R.color.skill_1);
         colors[1] = getResources().getColor(R.color.skill_2);
         drawPolygon();
+        adapter = new HelpAdapter(getContext());
+        listView.setAdapter(adapter);
         return v;
     }
 

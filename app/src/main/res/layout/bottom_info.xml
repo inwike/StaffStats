@@ -11,9 +11,9 @@
 
     <LinearLayout
         android:id="@+id/header"
+        android:background="@color/splashBg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <LinearLayout
             android:id="@+id/left"
             android:layout_width="wrap_content"
@@ -49,7 +49,6 @@
                 android:text="@string/soc"
                 android:textSize="14sp" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/right"
             android:layout_width="wrap_content"
@@ -86,6 +85,7 @@
                 android:text="@string/ent"
                 android:textSize="14sp" />
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -95,6 +95,7 @@
         android:background="@color/splashBg">
 
         <ListView
+            android:id="@+id/lv"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:divider="#b5b5b5"

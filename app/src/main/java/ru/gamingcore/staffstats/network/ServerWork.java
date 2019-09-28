@@ -1,11 +1,14 @@
 package ru.gamingcore.staffstats.network;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
+import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.json.Emp_data;
 import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.json.JsonData;
@@ -20,7 +23,8 @@ public class ServerWork {
     private static final String AUTH = "web:web";
     // emp_data?emp_uid=87433448-7cc0-11e2-9368-001b11b25590
     private static final String UID = "emp_uid";
-    private static final String ALLOW_ID = "allow_id";
+
+    private static final String DATE_DETAIL = "date_detail";
     private static final String FILE = "file";
 
     private String current_uid;
@@ -29,16 +33,15 @@ public class ServerWork {
     private GetJsonAsync.AsyncTaskListener resultListener = new GetJsonAsync.AsyncTaskListener() {
         @Override
         public void onResult(String result) {
-            try {
-                if (result == null) {
-                    throw new JSONException("null string");
-                }
+            if (result == null) {
+                return;
+            }
 
+            try {
                 JSONObject obj = new JSONObject(result);
                 Emp_data emp_data = JsonData.ParseExec(obj);
                 Emp_rating emp_rating = JsonData.ParseRating(obj);
                 Upload_data upload_data = JsonData.ParseUpload(obj);
-
                 if (upload_data != null) {
                     listener.onUpload();
                     return;
@@ -51,12 +54,17 @@ public class ServerWork {
                     listener.onExec_data(emp_data);
                     return;
                 }
-            } catch (JSONException e) {
-                Log.e(TAG, "JSONException " + e);
-                if (listener != null) {
-                    listener.onError();
+            } catch (JSONException ignored) {}
+
+            try {
+                JSONArray array = new JSONArray(result);
+                List<Detail> details = JsonData.ParseDetail(array);
+                if (details != null) {
+                    listener.onDetails(details);
+                    return;
                 }
-            }
+            } catch (JSONException e) {}
+
             if (listener != null) {
                 listener.onError();
             }
@@ -74,7 +82,6 @@ public class ServerWork {
         this.listener = listener;
     }
 
-
     private GetJsonAsync setRequest() {
         GetJsonAsync dataAsync = new GetJsonAsync();
         dataAsync.setListener(resultListener);
@@ -91,18 +98,18 @@ public class ServerWork {
         dataAsync.execute();
     }
 
-    public void allowScan(String allow_id) {
-        GetJsonAsync dataAsync = setRequest();
-        dataAsync.setCommand(GetJsonAsync.ALLOW_SCAN);
-        dataAsync.addParam(UID, current_uid);
-        dataAsync.addParam(ALLOW_ID, allow_id);
-        dataAsync.execute();
-    }
-
     public void empRating() {
         GetJsonAsync dataAsync = setRequest();
         dataAsync.setCommand(GetJsonAsync.EMP_RATING);
         dataAsync.addParam(UID, current_uid);
+        dataAsync.execute();
+    }
+
+    public void empDetails() {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setCommand(GetJsonAsync.EMP_DETAILS);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.addParam(DATE_DETAIL, "09.2019");//TODO bug)
         dataAsync.execute();
     }
 
@@ -115,16 +122,15 @@ public class ServerWork {
         dataAsync.execute();
     }
 
-    public void listViolation() {
-        GetJsonAsync dataAsync = setRequest();
-        dataAsync.setCommand(GetJsonAsync.LIST_VIOLATION);
-        dataAsync.execute();
-    }
-
     public interface Listener {
         void onExec_data(Emp_data emp_data);
+
         void onEmp_rating(Emp_rating emp_rating);
+
+        void onDetails(List<Detail> details);
+
         void onError();
+
         void onUpload();
     }
 

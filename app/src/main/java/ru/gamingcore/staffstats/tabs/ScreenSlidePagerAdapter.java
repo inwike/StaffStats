@@ -5,6 +5,9 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import java.util.List;
+
+import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.utils.Polygon;
 
@@ -18,15 +21,18 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         fragments[1] = new SkillsTab2();
     }
 
+    public void updateHelp(List<Detail> details) {
+        ((SkillsTab) fragments[0]).adapter.details = details;
+        ((SkillsTab) fragments[0]).adapter.notifyDataSetChanged();
+    }
+
     public void updateSkills(Emp_rating emp_rating) {
         Polygon p = new Polygon(emp_rating.getCurrent());
         ((SkillsTab) fragments[0]).graphs.add(p);
         p = new Polygon(emp_rating.getAvr());
         ((SkillsTab) fragments[0]).graphs.add(p);
 
-
         ((SkillsTab2) fragments[1]).emp_rating = emp_rating;
-
 
         ((SkillsTab) fragments[0]).drawPolygon();
         ((SkillsTab2) fragments[1]).drawPolygon();
