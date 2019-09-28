@@ -65,6 +65,7 @@ public class JsonData {
             emp_rating.avr_innov = obj.getString("avr_innov");
             emp_rating.avr_ent = obj.getString("avr_ent");
             emp_rating.size = 12;
+
         } catch (JSONException e) {
             Log.e(TAG, "JSONException " + e.getLocalizedMessage());
             return null;

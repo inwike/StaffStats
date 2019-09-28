@@ -123,11 +123,8 @@ public class ServerWork {
 
     public interface Listener {
         void onExec_data(Emp_data emp_data);
-
         void onEmp_rating(Emp_rating emp_rating);
-
         void onError();
-
         void onUpload();
     }
 
