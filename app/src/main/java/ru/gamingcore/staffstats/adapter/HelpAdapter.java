@@ -26,10 +26,10 @@ public class HelpAdapter extends BaseAdapter {
     public LayoutInflater lInflater;
 
 
-    public void Update() {
+    public void Update(String nav) {
         detailsView = new ArrayList<>();
-        Collection<List<Detail>> values = details.values();
-        for (List<Detail> value : values) {
+        List<Detail> value = details.get(nav);
+        if (value != null){
             Collections.sort(value, new Detail());
             detailsView.addAll(value);
         }

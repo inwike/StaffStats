@@ -9,13 +9,10 @@
         android:id="@+id/about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:onClick="onClick">
+        android:layout_gravity="center">
 
         <include layout="@layout/about_page_1_1" />
-
         <include layout="@layout/about_page_1_2" />
-
         <include layout="@layout/about_page_1_3" />
 
     </RelativeLayout>

@@ -7,17 +7,19 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -43,6 +45,10 @@ public class SkillsTab extends DialogFragment {
     private ListView listView;
     public HelpAdapter adapterDetail;
     public AvailAdapter adapterAvail;
+    private int hint = 0;
+    private BottomSheetBehavior sheetBehavior;
+    private View[] view = new View[6];
+    private String[] help = {"knld", "soc", "resp", "activ", "innov", "ent"};
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -58,10 +64,87 @@ public class SkillsTab extends DialogFragment {
         drawPolygon();
         adapterDetail = new HelpAdapter(getContext());
         listView.setAdapter(adapterDetail);
+        //exp
+        //collapsed
+        view[0] = v.findViewById(R.id.hint_1);
+        view[1] = v.findViewById(R.id.hint_2);
+        view[2] = v.findViewById(R.id.hint_3);
+        view[3] = v.findViewById(R.id.hint_4);
+        view[4] = v.findViewById(R.id.hint_5);
+        view[5] = v.findViewById(R.id.hint_6);
 
+        RelativeLayout linearLayout = v.findViewById(R.id.bottom_sheet);
+        sheetBehavior = BottomSheetBehavior.from(linearLayout);
+
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull final View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        Log.e("err", "STATE_HIDDEN");
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        Log.e("err", "STATE_EXPANDED");
+                        for (int i = 0; i < 6; i++) {
+                            final int t = i;
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                            );
+                            params.setMargins(10, 10, 10, 10);
+                            view[t].setLayoutParams(params);
+                        }
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        Log.e("err", "STATE_COLLAPSED");
+                        for (int i = 0; i < 6; i++) {
+                            final int t = i;
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                            );
+                            params.setMargins(0, 0, 0, 0);
+                            view[t].setLayoutParams(params);
+                        }
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        Log.e("err", "STATE_DRAGGING");
+                        for (int i = 0; i < 6; i++) {
+                            final int t = i;
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                            );
+                            params.setMargins(5, 5, 5, 5);
+                            view[t].setLayoutParams(params);
+                        }
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        Log.e("err", "STATE_SETTLING");
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+
+        for (int i = 0; i < 6; i++) {
+            final int t = i;
+            view[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                        adapterDetail.Update(help[t]);
+                        adapterDetail.notifyDataSetChanged();
+                    }
+                }
+            });
+        }
         return v;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +160,7 @@ public class SkillsTab extends DialogFragment {
                 down, 10, 15, false);
     }
 
-    public void onCancel(DialogInterface dialog) {
+    public void onCancel(@NonNull DialogInterface dialog) {
         super.onCancel(dialog);
     }
 

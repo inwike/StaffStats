@@ -24,7 +24,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
     public void updateHelp(List<Detail> details) {
         ((SkillsTab) fragments[0]).adapterDetail.details.put(details.get(0).id,details);
-        ((SkillsTab) fragments[0]).adapterDetail.Update();
+        ((SkillsTab) fragments[0]).adapterDetail.Update("knld");
         ((SkillsTab) fragments[0]).adapterDetail.notifyDataSetChanged();
     }
 
@@ -43,7 +43,6 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
         ((SkillsTab) fragments[0]).drawPolygon();
         ((SkillsTab2) fragments[1]).drawPolygon();
-
     }
 
     @NonNull
