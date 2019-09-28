@@ -70,21 +70,20 @@ public class JsonData {
     }
 
 
-
     public static List<Detail> ParseDetail(JSONArray arr) {
         List<Detail> result = new ArrayList<>();
 
         try {
-        for (int i = 0; i < arr.length(); i++) {
-            JSONObject obj = arr.getJSONObject(i);
-            Detail detail = new Detail();
-            detail.id = obj.getString("metod");
-            Log.e("detail.id",detail.id);
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject obj = arr.getJSONObject(i);
+                Detail detail = new Detail();
+                detail.id = obj.getString("metod");
+                Log.e("detail.id", detail.id);
 
-            detail.name = obj.getString("НаименованиеПоказателя");
-            detail.value = obj.getString("ЗначениеПоказателя");
-            result.add(detail);
-        }
+                detail.name = obj.getString("НаименованиеПоказателя");
+                detail.value = obj.getString("ЗначениеПоказателя");
+                result.add(detail);
+            }
         } catch (JSONException e) {
             return null;
         }
@@ -92,14 +91,14 @@ public class JsonData {
     }
 
     public static List<Avail> ParseAvail(JSONArray arr) {
-        List<Avail> result= new ArrayList<>();
+        List<Avail> result = new ArrayList<>();
         try {
             for (int i = 0; i < arr.length(); i++) {
                 Avail a = new Avail();
                 JSONObject obj = arr.getJSONObject(i);
                 a.name = obj.getString("Рекомендация");
                 JSONArray tmparr = obj.getJSONArray("Обучение");
-                for (int j = 0; j < tmparr.length();j++) {
+                for (int j = 0; j < tmparr.length(); j++) {
                     a.train.add(tmparr.getString(j));
                     a.url.add("http://gamingcore.ru/");
                 }

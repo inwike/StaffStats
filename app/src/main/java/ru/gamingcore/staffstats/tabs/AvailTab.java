@@ -2,11 +2,6 @@ package ru.gamingcore.staffstats.tabs;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,40 +9,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.gamingcore.staffstats.MyService;
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.adapter.AvailAdapter;
-import ru.gamingcore.staffstats.adapter.HelpAdapter;
 import ru.gamingcore.staffstats.json.Avail;
-import ru.gamingcore.staffstats.utils.Polygon;
 
 public class AvailTab extends DialogFragment {
     public AvailAdapter adapter;
-    private ExpandableListView listView;
     List<Avail> avails;
-    private PieChart pieChart ;
-    private List<PieEntry> entries ;
-    private PieDataSet pieDataSet ;
-    private PieData pieData ;
+    private ExpandableListView listView;
+    private PieChart pieChart;
+    private List<PieEntry> entries;
+    private PieDataSet pieDataSet;
+    private PieData pieData;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,8 +52,8 @@ public class AvailTab extends DialogFragment {
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) {
-                String obj = adapter.getChildUrl(groupPosition,childPosition);
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                String obj = adapter.getChildUrl(groupPosition, childPosition);
                 Uri uri = Uri.parse(obj);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
@@ -121,7 +107,7 @@ public class AvailTab extends DialogFragment {
     public void update() {
         entries.clear();
 
-        for(int i = 0; i< avails.size();i++) {
+        for (int i = 0; i < avails.size(); i++) {
             entries.add(new PieEntry(33.3f, i));
         }
 
@@ -137,13 +123,13 @@ public class AvailTab extends DialogFragment {
                     getContext().getResources().getColor(R.color.color_4),
                     getContext().getResources().getColor(R.color.color_5));
 
-            if(pieChart != null)
+            if (pieChart != null)
                 pieChart.setData(pieData);
         }
     }
 
-    public void AddValuesToPIEENTRY(List<Avail> avails){
-        this. avails = avails;
+    public void AddValuesToPIEENTRY(List<Avail> avails) {
+        this.avails = avails;
         update();
     }
 

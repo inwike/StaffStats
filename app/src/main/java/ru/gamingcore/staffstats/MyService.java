@@ -11,7 +11,6 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
-import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -34,6 +33,8 @@ public class MyService extends Service {
     private LocationManager locationManager;
     private MyLocationListener locationListener;
     private EventListener eventListener;
+    private List<Detail> details;
+    private List<Avail> avails;
     private ServerWork.Listener listener = new ServerWork.Listener() {
 
         @Override
@@ -82,8 +83,6 @@ public class MyService extends Service {
             }
         }
     };
-    private List<Detail> details;
-    private List<Avail> avails;
 
 
     public MyService() {
@@ -162,6 +161,7 @@ public class MyService extends Service {
         void onUpdate(Emp_rating emp_rating);
 
         void onDetails(List<Detail> details);
+
         void updateAvails(List<Avail> avails);
 
         void onFinish();

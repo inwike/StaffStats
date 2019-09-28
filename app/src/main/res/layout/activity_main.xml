@@ -7,19 +7,25 @@
     android:orientation="vertical">
 
 
+    <ProgressBar
+        android:id="@+id/pb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <RelativeLayout
         android:id="@+id/main"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="gone"
         tools:ignore="UselessParent">
 
         <RelativeLayout
             android:id="@+id/info"
-            android:background="@drawable/layout_bg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_bg">
 
             <ImageView
                 android:id="@+id/photo"
@@ -33,27 +39,32 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/user" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_below="@id/photo" />
+
             <TextView
                 android:id="@+id/lastname"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
-                android:textSize="22sp"
                 android:text="@string/def_lastname"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/firstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_toEndOf="@id/lastname"
-                android:textSize="22sp"
                 android:gravity="start"
                 android:text="@string/def_firstname"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -63,10 +74,10 @@
                 android:layout_below="@id/lastname"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
-                android:visibility="gone"
-                android:textSize="22sp"
                 android:text="@string/def_secondname"
-                android:textStyle="bold" />
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/type"
@@ -74,69 +85,64 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/secondname"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
-                android:text="@string/def_type" />
+                android:text="@string/def_type"
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/organization"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/type"
-                android:textSize="20sp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
-                android:text="@string/def_organization" />
+                android:text="@string/def_organization"
+                android:textSize="20sp" />
+
 
             <TextView
                 android:id="@+id/exp"
-                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/type"
-                android:visibility="gone"
-                android:textSize="20sp"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/organization"
                 android:gravity="start"
-                android:text="@string/def_exp" />
-
+                android:text="@string/def_exp"
+                android:textSize="20sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/department"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/organization"
-                android:visibility="gone"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
-                android:text="@string/def_department" />
+                android:text="@string/def_department"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/department"
-                android:textSize="18sp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
-                android:text="@string/def_position" />
+                android:text="@string/def_position"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/schedule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/position"
-                android:textSize="20sp"
-                android:visibility="gone"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
-                android:text="@string/def_schedule" />
-
-            <LinearLayout
-                android:layout_below="@id/photo"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                />
+                android:text="@string/def_schedule"
+                android:textSize="20sp"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -147,10 +153,4 @@
             android:layout_below="@id/info" />
 
     </RelativeLayout>
-
-    <ProgressBar
-        android:id="@+id/pb"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 </LinearLayout>

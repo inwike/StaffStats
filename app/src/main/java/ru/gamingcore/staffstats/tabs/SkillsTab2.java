@@ -24,13 +24,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import java.util.Calendar;
-
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.utils.Polygon;
 
-public class SkillsTab2 extends DialogFragment implements View.OnClickListener,View.OnTouchListener {
+public class SkillsTab2 extends DialogFragment implements View.OnClickListener, View.OnTouchListener {
 
     public Emp_rating emp_rating = new Emp_rating();
     private int[] colors = new int[2];//blue, red
@@ -49,9 +47,9 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener,V
     private boolean animating = false;
 
     public void drawYellow(int pos) {
-        for (int i=0;i < 6; i++) {
+        for (int i = 0; i < 6; i++) {
             view[i].setTextColor(0xFFFFFACD);
-            if(i == pos) {
+            if (i == pos) {
                 view[i].setTextColor(0xFFFFD700);
             }
         }
@@ -187,7 +185,7 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener,V
     }
 
     void drawPolygon() {
-        if(InfoMain == null)
+        if (InfoMain == null)
             return;
 
         int size = 1;

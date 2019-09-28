@@ -35,7 +35,6 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
     public static final String DATE_DETAIL = "date_detail";
 
 
-
     private static final String TAG = "INWIKE";
     private String method = GET;
     private String host;
@@ -114,7 +113,7 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
             }
 
         } catch (Exception e) {
-            Log.e(TAG, command+" = Exception " + e.getLocalizedMessage());
+            Log.e(TAG, command + " = Exception " + e.getLocalizedMessage());
 
             if (listener != null) {
                 listener.onError();

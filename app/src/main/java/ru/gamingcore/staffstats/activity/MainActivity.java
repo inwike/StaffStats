@@ -1,7 +1,6 @@
 package ru.gamingcore.staffstats.activity;
 
 import android.Manifest;
-import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -27,14 +26,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.SurfaceView;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -72,14 +69,13 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 123456;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static final int sImageFormat = ImageFormat.JPEG;
+
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
         ORIENTATIONS.append(Surface.ROTATION_90, 0);
         ORIENTATIONS.append(Surface.ROTATION_180, 270);
         ORIENTATIONS.append(Surface.ROTATION_270, 180);
     }
-    private SurfaceView sv;
-    private ProgressBar pb;
 
     private final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
         @Override
@@ -87,33 +83,6 @@ public class MainActivity extends AppCompatActivity {
             super.onCaptureCompleted(session, request, result);
         }
     };
-
-    private final ImageReader.OnImageAvailableListener mOnImageAvailableListener =
-            new ImageReader.OnImageAvailableListener() {
-
-                @Override
-                public void onImageAvailable(ImageReader reader) {
-                    Image img = reader.acquireLatestImage();
-                    try {
-                        if (img == null) throw new NullPointerException("cannot be null");
-                        ByteBuffer buffer = img.getPlanes()[0].getBuffer();
-                        byte[] data = new byte[buffer.remaining()];
-                        buffer.get(data);
-                        String bs = Base64.encodeToString(data, Base64.NO_WRAP);
-                        if(service!= null) {
-                            service.serverWork.Test(bs);
-
-                        }
-
-                    } catch (NullPointerException ex) {
-                        ex.printStackTrace();
-                    } finally {
-                        if (img != null)
-                            img.close();
-                    }
-                }
-
-            };
     ViewPager.OnPageChangeListener pagerListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -127,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
         public void onPageScrollStateChanged(int state) {
         }
     };
+    private SurfaceView sv;
+    private ProgressBar pb;
     private ImageReader mImageReader;
     private String mCameraId;
     private CameraDevice cameraDevice;
@@ -155,6 +126,32 @@ public class MainActivity extends AppCompatActivity {
     };
     private HandlerThread mBackgroundThread;
     private MyService service;
+    private final ImageReader.OnImageAvailableListener mOnImageAvailableListener =
+            new ImageReader.OnImageAvailableListener() {
+
+                @Override
+                public void onImageAvailable(ImageReader reader) {
+                    Image img = reader.acquireLatestImage();
+                    try {
+                        if (img == null) throw new NullPointerException("cannot be null");
+                        ByteBuffer buffer = img.getPlanes()[0].getBuffer();
+                        byte[] data = new byte[buffer.remaining()];
+                        buffer.get(data);
+                        String bs = Base64.encodeToString(data, Base64.NO_WRAP);
+                        if (service != null) {
+                            service.serverWork.Test(bs);
+
+                        }
+
+                    } catch (NullPointerException ex) {
+                        ex.printStackTrace();
+                    } finally {
+                        if (img != null)
+                            img.close();
+                    }
+                }
+
+            };
     private Bitmap tmp;
     private ViewPager pager;
     private View main;
@@ -214,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                     checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-            checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED &&
+                    checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED &&
                     checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(
                         new String[]{
@@ -261,34 +258,34 @@ public class MainActivity extends AppCompatActivity {
     protected void createCameraPreview() {
         try {
             SurfaceTexture texture = new SurfaceTexture(10);
-                texture.setDefaultBufferSize(imageDimension.getWidth(), imageDimension.getHeight());
+            texture.setDefaultBufferSize(imageDimension.getWidth(), imageDimension.getHeight());
 
-                Surface surface = new Surface(texture);
-                Surface mImageSurface = mImageReader.getSurface();
+            Surface surface = new Surface(texture);
+            Surface mImageSurface = mImageReader.getSurface();
 
-                List<Surface> outputSurfaces = new ArrayList<>(2);
-                outputSurfaces.add(mImageSurface);
-                outputSurfaces.add(surface);
+            List<Surface> outputSurfaces = new ArrayList<>(2);
+            outputSurfaces.add(mImageSurface);
+            outputSurfaces.add(surface);
 
-                captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-                captureRequestBuilder.addTarget(surface);
-                captureRequestBuilder.addTarget(mImageSurface);
+            captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+            captureRequestBuilder.addTarget(surface);
+            captureRequestBuilder.addTarget(mImageSurface);
 
-                cameraDevice.createCaptureSession(outputSurfaces, new CameraCaptureSession.StateCallback() {
-                    @Override
-                    public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
-                        if (null == cameraDevice) {
-                            return;
-                        }
-
-                        cameraCaptureSessions = cameraCaptureSession;
-                        updatePreview();
+            cameraDevice.createCaptureSession(outputSurfaces, new CameraCaptureSession.StateCallback() {
+                @Override
+                public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
+                    if (null == cameraDevice) {
+                        return;
                     }
 
-                    @Override
-                    public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
-                    }
-                }, null);
+                    cameraCaptureSessions = cameraCaptureSession;
+                    updatePreview();
+                }
+
+                @Override
+                public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
+                }
+            }, null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }

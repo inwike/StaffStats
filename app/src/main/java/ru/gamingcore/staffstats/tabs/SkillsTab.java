@@ -33,8 +33,9 @@ import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.utils.Polygon;
 
 public class SkillsTab extends DialogFragment {
-    List<Detail> details;
     public List<Polygon> graphs = new ArrayList<>();
+    public HelpAdapter adapterDetail;
+    List<Detail> details;
     private String[] header = {"По специальности"};
     private int[] colors = new int[2];//blue, red
     private Bitmap up;
@@ -43,16 +44,15 @@ public class SkillsTab extends DialogFragment {
     private TextView logo1;
     private TextView logo2;
     private ListView listView;
-    public HelpAdapter adapterDetail;
     private BottomSheetBehavior sheetBehavior;
     private TextView[] view = new TextView[6];
     private String[] help = {"knld", "soc", "resp", "activ", "innov", "ent"};
 
 
     public void drawYellow(int pos) {
-        for (int i=0;i < 6; i++) {
+        for (int i = 0; i < 6; i++) {
             view[i].setTextColor(0xFFFFFACD);
-            if(i == pos) {
+            if (i == pos) {
                 view[i].setTextColor(0xFFFFD700);
             }
         }
@@ -146,7 +146,7 @@ public class SkillsTab extends DialogFragment {
             view[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
                         adapterDetail.Update(help[t]);
                         drawYellow(t);
                         adapterDetail.notifyDataSetChanged();
@@ -154,7 +154,7 @@ public class SkillsTab extends DialogFragment {
                 }
             });
         }
-        if(adapterDetail != null) {
+        if (adapterDetail != null) {
             adapterDetail.details.put(details.get(0).id, details);
             adapterDetail.Update("knld");
             adapterDetail.notifyDataSetChanged();
@@ -204,7 +204,7 @@ public class SkillsTab extends DialogFragment {
     }
 
     public void drawPolygon() {
-        if(logo1== null)
+        if (logo1 == null)
             return;
 
         int size = graphs.size() + 1;
@@ -232,10 +232,10 @@ public class SkillsTab extends DialogFragment {
 
     public void update(List<Detail> details) {
         this.details = details;
-        if(adapterDetail != null) {
+        if (adapterDetail != null) {
             adapterDetail.details.put(details.get(0).id, details);
-           adapterDetail.Update("knld");
-           adapterDetail.notifyDataSetChanged();
+            adapterDetail.Update("knld");
+            adapterDetail.notifyDataSetChanged();
         }
 
     }

@@ -5,8 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.view.MotionEvent;
-import android.view.View;
 
 public class Polygon {
     private static final String TAG = "INWIKE";

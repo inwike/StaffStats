@@ -16,6 +16,7 @@ public class Emp_rating {
     public String avr_activ = "";
     public String avr_innov = "";
     public String avr_ent = "";
+
     public int getSize() {
         return size;
     }

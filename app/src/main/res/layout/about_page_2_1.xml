@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/android2"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:contentDescription="@null"
+        android:src="@drawable/skills" />
+
     <RelativeLayout
-        android:gravity="center_horizontal"
-        android:layout_marginTop="20dp"
         android:id="@+id/logo"
-        android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal">
+
         <TextView
             android:id="@+id/logo1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/hint_item_1"
             android:textSize="16sp" />
+
         <TextView
             android:id="@+id/logo2"
-            android:layout_toEndOf="@id/logo1"
             android:layout_width="wrap_content"
-            android:drawableStart="@drawable/hint_item_2"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/logo1"
+            android:drawableStart="@drawable/hint_item_2"
             android:textSize="16sp" />
     </RelativeLayout>
-
-    <ImageView
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/android2"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:contentDescription="@null"
-        android:src="@drawable/skills" />
 
     <include layout="@layout/bottom_info" />
 

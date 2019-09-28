@@ -11,6 +11,7 @@ public class NonSwipeableViewPager extends ViewPager {
     private static final String TAG = "INWIKE";
     private float initialXValue;
     private SwipeDirection direction;
+
     public NonSwipeableViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.direction = SwipeDirection.all;

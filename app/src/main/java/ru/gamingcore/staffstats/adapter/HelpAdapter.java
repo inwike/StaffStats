@@ -8,36 +8,33 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.json.Detail;
 
 
 public class HelpAdapter extends BaseAdapter {
-    public Map<String,List<Detail>> details = new HashMap<>();
+    public Map<String, List<Detail>> details = new HashMap<>();
     public List<Detail> detailsView = new ArrayList<>();
     public LayoutInflater lInflater;
 
 
-    public void Update(String nav) {
-        detailsView = new ArrayList<>();
-        List<Detail> value = details.get(nav);
-        if (value != null){
-            Collections.sort(value, new Detail());
-            detailsView.addAll(value);
-        }
-    }
-
     public HelpAdapter(Context context) {
         lInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public void Update(String nav) {
+        detailsView = new ArrayList<>();
+        List<Detail> value = details.get(nav);
+        if (value != null) {
+            Collections.sort(value, new Detail());
+            detailsView.addAll(value);
+        }
     }
 
     @Override

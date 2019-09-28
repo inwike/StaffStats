@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.List;
 
 import ru.gamingcore.staffstats.json.Avail;
@@ -52,7 +53,8 @@ public class ServerWork {
                     listener.onExec_data(emp_data);
                     return;
                 }
-            } catch (JSONException ignored) {}
+            } catch (JSONException ignored) {
+            }
 
             try {
                 JSONArray array = new JSONArray(result);
@@ -68,7 +70,8 @@ public class ServerWork {
                     listener.onDetails(details);
                     return;
                 }
-            } catch (JSONException ignored) {}
+            } catch (JSONException ignored) {
+            }
 
             if (listener != null) {
                 listener.onError();
@@ -111,7 +114,7 @@ public class ServerWork {
     }
 
     public void Test(String image) {
-        GetJsonAsync dataAsync =new GetJsonAsync();
+        GetJsonAsync dataAsync = new GetJsonAsync();
         dataAsync.setHost("http://10.70.0.149:21000/");
         dataAsync.setCommand("recognize");
         dataAsync.setAuth("");
