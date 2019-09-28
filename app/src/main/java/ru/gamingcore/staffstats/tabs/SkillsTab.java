@@ -28,12 +28,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.gamingcore.staffstats.R;
-import ru.gamingcore.staffstats.adapter.AvailAdapter;
 import ru.gamingcore.staffstats.adapter.HelpAdapter;
+import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.utils.Polygon;
 
 public class SkillsTab extends DialogFragment {
-
+    List<Detail> details;
     public List<Polygon> graphs = new ArrayList<>();
     private String[] header = {"По специальности"};
     private int[] colors = new int[2];//blue, red
@@ -44,7 +44,6 @@ public class SkillsTab extends DialogFragment {
     private TextView logo2;
     private ListView listView;
     public HelpAdapter adapterDetail;
-    private int hint = 0;
     private BottomSheetBehavior sheetBehavior;
     private TextView[] view = new TextView[6];
     private String[] help = {"knld", "soc", "resp", "activ", "innov", "ent"};
@@ -155,6 +154,11 @@ public class SkillsTab extends DialogFragment {
                 }
             });
         }
+        if(adapterDetail != null) {
+            adapterDetail.details.put(details.get(0).id, details);
+            adapterDetail.Update("knld");
+            adapterDetail.notifyDataSetChanged();
+        }
         return v;
     }
 
@@ -175,7 +179,6 @@ public class SkillsTab extends DialogFragment {
     public void onCancel(@NonNull DialogInterface dialog) {
         super.onCancel(dialog);
     }
-
 
     @Override
     public void onResume() {
@@ -201,6 +204,9 @@ public class SkillsTab extends DialogFragment {
     }
 
     public void drawPolygon() {
+        if(logo1== null)
+            return;
+
         int size = graphs.size() + 1;
         logo1.setText(header[0]);
         logo2.setText("");
@@ -212,7 +218,6 @@ public class SkillsTab extends DialogFragment {
 
             p.up = up;
             p2.up = up;
-
             p.down = down;
             p2.down = down;
 
@@ -221,9 +226,18 @@ public class SkillsTab extends DialogFragment {
         }
 
         LayerDrawable layerDrawable = new LayerDrawable(layers);
-
         if (imageView != null)
             imageView.setImageDrawable(layerDrawable);
+    }
+
+    public void update(List<Detail> details) {
+        this.details = details;
+        if(adapterDetail != null) {
+            adapterDetail.details.put(details.get(0).id, details);
+           adapterDetail.Update("knld");
+           adapterDetail.notifyDataSetChanged();
+        }
+
     }
 
 

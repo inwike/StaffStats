@@ -187,6 +187,9 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener,V
     }
 
     void drawPolygon() {
+        if(InfoMain == null)
+            return;
+
         int size = 1;
         if (emp_rating.getSize() > 1) {
             size = 3;

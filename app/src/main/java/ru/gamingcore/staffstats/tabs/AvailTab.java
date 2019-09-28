@@ -33,16 +33,17 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.gamingcore.staffstats.MyService;
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.adapter.AvailAdapter;
 import ru.gamingcore.staffstats.adapter.HelpAdapter;
+import ru.gamingcore.staffstats.json.Avail;
 import ru.gamingcore.staffstats.utils.Polygon;
 
 public class AvailTab extends DialogFragment {
-
     public AvailAdapter adapter;
     private ExpandableListView listView;
-
+    List<Avail> avails;
     private PieChart pieChart ;
     private List<PieEntry> entries ;
     private PieDataSet pieDataSet ;
@@ -78,9 +79,7 @@ public class AvailTab extends DialogFragment {
         pieChart = v.findViewById(R.id.chart1);
         adapter = new AvailAdapter(getContext());
         listView.setAdapter(adapter);
-
-        AddValuesToPIEENTRY();
-
+        update();
         return v;
     }
 
@@ -119,18 +118,33 @@ public class AvailTab extends DialogFragment {
         super.onResume();
     }
 
-    public void AddValuesToPIEENTRY(){
-        for(int i = 0; i< adapter.values.size();i++) {
+    public void update() {
+        entries.clear();
+
+        for(int i = 0; i< avails.size();i++) {
             entries.add(new PieEntry(33.3f, i));
         }
-        if (entries.size() > 0) {
+
+        if (adapter != null) {
+            adapter.values = avails;
+            adapter.notifyDataSetChanged();
+        }
+
+        if (avails.size() > 0) {
             pieDataSet = new PieDataSet(entries, "");
             pieData = new PieData(pieDataSet);
             pieDataSet.setColors(getContext().getResources().getColor(R.color.color_3),
                     getContext().getResources().getColor(R.color.color_4),
                     getContext().getResources().getColor(R.color.color_5));
-            pieChart.setData(pieData);
+
+            if(pieChart != null)
+                pieChart.setData(pieData);
         }
+    }
+
+    public void AddValuesToPIEENTRY(List<Avail> avails){
+        this. avails = avails;
+        update();
     }
 
 }

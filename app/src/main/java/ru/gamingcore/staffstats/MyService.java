@@ -54,6 +54,7 @@ public class MyService extends Service {
 
         @Override
         public void onDetails(List<Detail> details) {
+            MyService.this.details = details;
             if (eventListener != null) {
                 eventListener.onDetails(details);
             }
@@ -61,6 +62,7 @@ public class MyService extends Service {
 
         @Override
         public void onAvails(List<Avail> avails) {
+            MyService.this.avails = avails;
             if (eventListener != null) {
                 eventListener.updateAvails(avails);
             }
@@ -80,6 +82,8 @@ public class MyService extends Service {
             }
         }
     };
+    private List<Detail> details;
+    private List<Avail> avails;
 
 
     public MyService() {

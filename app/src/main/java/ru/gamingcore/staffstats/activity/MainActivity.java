@@ -68,22 +68,20 @@ import static ru.gamingcore.staffstats.utils.Avatar.setAvatar;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "INWIKE";
     private static final int SET_AVATAR_CODE = 777;
-    private static final int sImageFormat = ImageFormat.JPEG;
     private static final int REQUEST_CAMERA_PERMISSION = 200;
-    private static final int ACTION_CROP_FROM_CAMERA = 22222;
+    private static final int PERMISSION_REQUEST_CODE = 123456;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
-    private static int PERMISSION_REQUEST_CODE = 123456;
-    SurfaceView sv;
-    ProgressBar pb;
-
+    private static final int sImageFormat = ImageFormat.JPEG;
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
         ORIENTATIONS.append(Surface.ROTATION_90, 0);
         ORIENTATIONS.append(Surface.ROTATION_180, 270);
         ORIENTATIONS.append(Surface.ROTATION_270, 180);
     }
+    private SurfaceView sv;
+    private ProgressBar pb;
 
-    final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
+    private final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
         @Override
         public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
             super.onCaptureCompleted(session, request, result);
@@ -136,27 +134,6 @@ public class MainActivity extends AppCompatActivity {
     private CaptureRequest.Builder captureRequestBuilder;
     private Size imageDimension;
     private Handler mBackgroundHandler;
-    TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
-        @Override
-        public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-            //open your camera here
-            openCamera(width, height);
-        }
-
-        @Override
-        public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-            // Transform you image captured size according to the surface width and height
-        }
-
-        @Override
-        public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-            return false;
-        }
-
-        @Override
-        public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-        }
-    };
     private final CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
@@ -212,6 +189,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void updateAvails(List<Avail> avails) {
             pagerAdapter.updateAvails(avails);
+            pb.setVisibility(View.GONE);
+            main.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -230,14 +209,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ServiceConnection sConn = new ServiceConnection() {
         public void onServiceConnected(ComponentName name, IBinder binder) {
-            pb.setVisibility(View.GONE);
-            main.setVisibility(View.VISIBLE);
             service = ((MyService.LocalBinder) binder).getService();
             service.setEventListener(eventListener);
-            service.serverWork.execData();
-            service.serverWork.empRating();
-            service.serverWork.empDetails();
-            service.serverWork.empAvail();
+
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                     checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED &&
@@ -253,11 +227,13 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 service.initLocation();
             }
+
+            service.serverWork.execData();
+            service.serverWork.empRating();
+            service.serverWork.empDetails();
+            service.serverWork.empAvail();
+
         }
-
-
-
-
 
         public void onServiceDisconnected(ComponentName name) {
             service = null;
@@ -284,10 +260,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void createCameraPreview() {
         try {
-            SurfaceView sv = new SurfaceView(getApplicationContext());
             SurfaceTexture texture = new SurfaceTexture(10);
-
-            if (texture != null) {
                 texture.setDefaultBufferSize(imageDimension.getWidth(), imageDimension.getHeight());
 
                 Surface surface = new Surface(texture);
@@ -316,7 +289,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
                     }
                 }, null);
-            }
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -474,7 +446,6 @@ public class MainActivity extends AppCompatActivity {
     private void Authorize() {
         AuthorizeDialog dialog = new AuthorizeDialog();
         dialog.setCancelable(false);
-
         getSupportFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
             @Override
             public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
@@ -499,7 +470,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startMain() {
-        final Intent intent = new Intent(this, MyService.class);
+        Intent intent = new Intent(this, MyService.class);
         bindService(intent, sConn, BIND_AUTO_CREATE);
         pb.setVisibility(View.VISIBLE);
     }

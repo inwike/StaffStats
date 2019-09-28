@@ -24,15 +24,11 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public void updateHelp(List<Detail> details) {
-        ((SkillsTab) fragments[0]).adapterDetail.details.put(details.get(0).id,details);
-        ((SkillsTab) fragments[0]).adapterDetail.Update("knld");
-        ((SkillsTab) fragments[0]).adapterDetail.notifyDataSetChanged();
+        ((SkillsTab) fragments[0]).update(details);
     }
 
     public void updateAvails(List<Avail> avails) {
-        ((AvailTab) fragments[2]).adapter.values = avails;
-        ((AvailTab) fragments[2]).adapter.notifyDataSetChanged();
-        ((AvailTab) fragments[2]).AddValuesToPIEENTRY();
+        ((AvailTab) fragments[2]).AddValuesToPIEENTRY(avails);
     }
 
     public void updateSkills(Emp_rating emp_rating) {
@@ -40,9 +36,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         ((SkillsTab) fragments[0]).graphs.add(p);
         p = new Polygon(emp_rating.getAvr());
         ((SkillsTab) fragments[0]).graphs.add(p);
-
         ((SkillsTab2) fragments[1]).emp_rating = emp_rating;
-
         ((SkillsTab) fragments[0]).drawPolygon();
         ((SkillsTab2) fragments[1]).drawPolygon();
     }
