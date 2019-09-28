@@ -52,6 +52,7 @@ import java.util.List;
 import ru.gamingcore.staffstats.MyService;
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.finger.AuthorizeDialog;
+import ru.gamingcore.staffstats.json.Avail;
 import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.tabs.ScreenSlidePagerAdapter;
@@ -203,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void updateAvails(List<String> avails) {
+        public void updateAvails(List<Avail> avails) {
             pagerAdapter.updateAvails(avails);
         }
 

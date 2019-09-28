@@ -91,14 +91,18 @@ public class JsonData {
         return result;
     }
 
-    public static List<String> ParseAvail(JSONArray arr) {
-
-        List<String> result= new ArrayList<>();
+    public static List<Avail> ParseAvail(JSONArray arr) {
+        List<Avail> result= new ArrayList<>();
         try {
             for (int i = 0; i < arr.length(); i++) {
+                Avail a = new Avail();
                 JSONObject obj = arr.getJSONObject(i);
-                String value = obj.getString("ЗначениеПоказателя22");
-                result.add(value);
+                a.name = obj.getString("Рекомендация");
+                JSONArray tmparr = obj.getJSONArray("Обучение");
+                for (int j = 0; j < tmparr.length();j++) {
+                    a.train.add(tmparr.getString(j));
+                }
+                result.add(a);
             }
         } catch (JSONException e) {
             return null;

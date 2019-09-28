@@ -44,10 +44,9 @@ public class SkillsTab extends DialogFragment {
     private TextView logo2;
     private ListView listView;
     public HelpAdapter adapterDetail;
-    public AvailAdapter adapterAvail;
     private int hint = 0;
     private BottomSheetBehavior sheetBehavior;
-    private View[] view = new View[6];
+    private TextView[] view = new TextView[6];
     private String[] help = {"knld", "soc", "resp", "activ", "innov", "ent"};
 
 
@@ -75,7 +74,6 @@ public class SkillsTab extends DialogFragment {
 
         RelativeLayout linearLayout = v.findViewById(R.id.bottom_sheet);
         sheetBehavior = BottomSheetBehavior.from(linearLayout);
-
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull final View bottomSheet, int newState) {
@@ -91,7 +89,7 @@ public class SkillsTab extends DialogFragment {
                                     LinearLayout.LayoutParams.WRAP_CONTENT,
                                     LinearLayout.LayoutParams.WRAP_CONTENT
                             );
-                            params.setMargins(10, 10, 10, 10);
+                            params.setMargins(0, 25, 0, 0);
                             view[t].setLayoutParams(params);
                         }
                         break;
@@ -109,13 +107,14 @@ public class SkillsTab extends DialogFragment {
                         break;
                     case BottomSheetBehavior.STATE_DRAGGING:
                         Log.e("err", "STATE_DRAGGING");
+
                         for (int i = 0; i < 6; i++) {
                             final int t = i;
                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.WRAP_CONTENT,
                                     LinearLayout.LayoutParams.WRAP_CONTENT
                             );
-                            params.setMargins(5, 5, 5, 5);
+                            params.setMargins(0, 0, 0, 0);
                             view[t].setLayoutParams(params);
                         }
                         break;

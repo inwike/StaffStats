@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
+import ru.gamingcore.staffstats.json.Avail;
 import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.utils.Polygon;
@@ -28,9 +29,9 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         ((SkillsTab) fragments[0]).adapterDetail.notifyDataSetChanged();
     }
 
-    public void updateAvails(List<String> avails) {
-        ((SkillsTab) fragments[0]).adapterAvail.values = avails;
-        ((SkillsTab) fragments[0]).adapterAvail.notifyDataSetChanged();
+    public void updateAvails(List<Avail> avails) {
+        ((AvailTab) fragments[2]).adapter.values = avails;
+        ((AvailTab) fragments[2]).adapter.notifyDataSetChanged();
     }
 
     public void updateSkills(Emp_rating emp_rating) {

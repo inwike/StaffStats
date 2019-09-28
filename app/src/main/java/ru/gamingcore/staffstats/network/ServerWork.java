@@ -1,12 +1,13 @@
 package ru.gamingcore.staffstats.network;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.List;
+
+import ru.gamingcore.staffstats.json.Avail;
 import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.json.Emp_data;
 import ru.gamingcore.staffstats.json.Emp_rating;
@@ -56,7 +57,7 @@ public class ServerWork {
             try {
                 JSONArray array = new JSONArray(result);
                 List<Detail> details = JsonData.ParseDetail(array);
-                List<String> avails = JsonData.ParseAvail(array);
+                List<Avail> avails = JsonData.ParseAvail(array);
 
                 if (avails != null && avails.size() > 0) {
                     listener.onAvails(avails);
@@ -121,7 +122,7 @@ public class ServerWork {
 
     public void empAvail() {
         GetJsonAsync dataAsync = setRequest();
-        dataAsync.setCommand(GetJsonAsync.EMP_AVAIL);
+        dataAsync.setCommand(GetJsonAsync.EMP_RECOM);
         dataAsync.addParam(UID, current_uid);
         dataAsync.execute();
     }
@@ -200,7 +201,7 @@ public class ServerWork {
 
         void onDetails(List<Detail> details);
 
-        void onAvails(List<String> details);
+        void onAvails(List<Avail> details);
 
         void onError();
 

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import java.util.List;
 
+import ru.gamingcore.staffstats.json.Avail;
 import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.json.Emp_data;
 import ru.gamingcore.staffstats.json.Emp_rating;
@@ -59,7 +60,7 @@ public class MyService extends Service {
         }
 
         @Override
-        public void onAvails(List<String> avails) {
+        public void onAvails(List<Avail> avails) {
             if (eventListener != null) {
                 eventListener.updateAvails(avails);
             }
@@ -157,7 +158,7 @@ public class MyService extends Service {
         void onUpdate(Emp_rating emp_rating);
 
         void onDetails(List<Detail> details);
-        void updateAvails(List<String> avails);
+        void updateAvails(List<Avail> avails);
 
         void onFinish();
     }

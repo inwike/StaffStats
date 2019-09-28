@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,14 +31,12 @@ import ru.gamingcore.staffstats.utils.Polygon;
 public class AvailTab extends DialogFragment {
 
     public AvailAdapter adapter;
-    private ListView listView;
-    private TextView textView;
+    private ExpandableListView listView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.avail_page, container, false);
 
-        textView = v.findViewById(R.id.value);
         listView = v.findViewById(R.id.lv);
         adapter = new AvailAdapter(getContext());
         listView.setAdapter(adapter);
