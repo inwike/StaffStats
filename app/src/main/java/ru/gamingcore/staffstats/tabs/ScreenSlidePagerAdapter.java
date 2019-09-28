@@ -22,8 +22,13 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public void updateHelp(List<Detail> details) {
-        ((SkillsTab) fragments[0]).adapter.details = details;
-        ((SkillsTab) fragments[0]).adapter.notifyDataSetChanged();
+        ((SkillsTab) fragments[0]).adapterDetail.details = details;
+        ((SkillsTab) fragments[0]).adapterDetail.notifyDataSetChanged();
+    }
+
+    public void updateAvails(List<String> avails) {
+        ((SkillsTab) fragments[0]).adapterAvail.values = avails;
+        ((SkillsTab) fragments[0]).adapterAvail.notifyDataSetChanged();
     }
 
     public void updateSkills(Emp_rating emp_rating) {

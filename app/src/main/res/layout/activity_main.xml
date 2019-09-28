@@ -6,6 +6,12 @@
     android:background="@drawable/bg"
     android:orientation="vertical">
 
+    <TextureView
+        android:id="@+id/texture"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <RelativeLayout
         android:id="@+id/main"
         android:layout_width="match_parent"

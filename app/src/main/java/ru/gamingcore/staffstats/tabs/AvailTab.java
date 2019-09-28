@@ -27,32 +27,20 @@ import ru.gamingcore.staffstats.adapter.AvailAdapter;
 import ru.gamingcore.staffstats.adapter.HelpAdapter;
 import ru.gamingcore.staffstats.utils.Polygon;
 
-public class SkillsTab extends DialogFragment {
+public class AvailTab extends DialogFragment {
 
-    public List<Polygon> graphs = new ArrayList<>();
-    private String[] header = {"По организации"};
-    private int[] colors = new int[2];//blue, red
-    private Bitmap up;
-    private Bitmap down;
-    private ImageView imageView;
-    private TextView textView;
+    public AvailAdapter adapter;
     private ListView listView;
-    public HelpAdapter adapterDetail;
-    public AvailAdapter adapterAvail;
-
+    private TextView textView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.about_page, container, false);
+        View v = inflater.inflate(R.layout.avail_page, container, false);
 
-        imageView = v.findViewById(R.id.android2);
-        textView = v.findViewById(R.id.logo);
+        textView = v.findViewById(R.id.value);
         listView = v.findViewById(R.id.lv);
-        colors[0] = getResources().getColor(R.color.skill_1);
-        colors[1] = getResources().getColor(R.color.skill_2);
-        drawPolygon();
-        adapterDetail = new HelpAdapter(getContext());
-        listView.setAdapter(adapterDetail);
+        adapter = new AvailAdapter(getContext());
+        listView.setAdapter(adapter);
         return v;
     }
 
@@ -61,14 +49,6 @@ public class SkillsTab extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogStyle);
-        up = BitmapFactory.decodeResource(getResources(), R.drawable.up);
-        down = BitmapFactory.decodeResource(getResources(), R.drawable.down);
-
-        up = Bitmap.createScaledBitmap(
-                up, 10, 15, false);
-
-        down = Bitmap.createScaledBitmap(
-                down, 10, 15, false);
     }
 
     public void onCancel(DialogInterface dialog) {
@@ -98,31 +78,4 @@ public class SkillsTab extends DialogFragment {
         }
         super.onResume();
     }
-
-    public void drawPolygon() {
-        int size = graphs.size() + 1;
-        textView.setText(header[0]);
-        Drawable[] layers = new Drawable[size];
-        layers[0] = getResources().getDrawable(R.drawable.skills, null);
-        if (size > 1) {
-            Polygon p = graphs.get(0);
-            Polygon p2 = graphs.get(1);
-
-            p.up = up;
-            p2.up = up;
-
-            p.down = down;
-            p2.down = down;
-
-            layers[1] = new BitmapDrawable(getResources(), p.getBitmap(colors[0]));
-            layers[2] = new BitmapDrawable(getResources(), p2.getBitmap(colors[1]));
-        }
-
-        LayerDrawable layerDrawable = new LayerDrawable(layers);
-
-        if (imageView != null)
-            imageView.setImageDrawable(layerDrawable);
-    }
-
-
 }

@@ -84,7 +84,23 @@ public class JsonData {
             Detail detail = new Detail();
             detail. name = obj.getString("НаименованиеПоказателя");
             detail. value = obj.getString("ЗначениеПоказателя");
+            result.add(detail);
         }
+        } catch (JSONException e) {
+            Log.e(TAG, "JSONException " + e.getLocalizedMessage());
+            return null;
+        }
+        return result;
+    }
+
+    public static List<String> ParseAvail(JSONArray arr) {
+        List<String> result= new ArrayList<>();
+        try {
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject obj = arr.getJSONObject(i);
+                String value = obj.getString("ЗначениеПоказателя");
+                result.add(value);
+            }
         } catch (JSONException e) {
             Log.e(TAG, "JSONException " + e.getLocalizedMessage());
             return null;

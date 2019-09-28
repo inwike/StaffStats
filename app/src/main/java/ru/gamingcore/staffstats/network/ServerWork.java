@@ -5,9 +5,7 @@ import android.graphics.Bitmap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.List;
-
 import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.json.Emp_data;
 import ru.gamingcore.staffstats.json.Emp_rating;
@@ -21,9 +19,7 @@ public class ServerWork {
     private static final String verif_id = "87433448-7cc0-11e2-9368-001b11b25590";
     private static final String HOST = "http://10.70.1.205/Inwike_HR/hs/Inwike/ID/";
     private static final String AUTH = "web:web";
-    // emp_data?emp_uid=87433448-7cc0-11e2-9368-001b11b25590
     private static final String UID = "emp_uid";
-
     private static final String DATE_DETAIL = "date_detail";
     private static final String FILE = "file";
 
@@ -59,11 +55,18 @@ public class ServerWork {
             try {
                 JSONArray array = new JSONArray(result);
                 List<Detail> details = JsonData.ParseDetail(array);
+                List<String> avails = JsonData.ParseAvail(array);
+
+                if (avails != null) {
+                    listener.onAvails(avails);
+                    return;
+                }
+
                 if (details != null) {
                     listener.onDetails(details);
                     return;
                 }
-            } catch (JSONException e) {}
+            } catch (JSONException ignored) {}
 
             if (listener != null) {
                 listener.onError();
@@ -105,6 +108,13 @@ public class ServerWork {
         dataAsync.execute();
     }
 
+    public void empAvail() {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setCommand(GetJsonAsync.EMP_AVAIL);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.execute();
+    }
+
     public void empDetails() {
         GetJsonAsync dataAsync = setRequest();
         dataAsync.setCommand(GetJsonAsync.EMP_DETAILS);
@@ -129,10 +139,10 @@ public class ServerWork {
 
         void onDetails(List<Detail> details);
 
+        void onAvails(List<String> details);
+
         void onError();
 
         void onUpload();
     }
-
-
 }

@@ -59,6 +59,13 @@ public class MyService extends Service {
         }
 
         @Override
+        public void onAvails(List<String> avails) {
+            if (eventListener != null) {
+                eventListener.onAvails(avails);
+            }
+        }
+
+        @Override
         public void onUpload() {
             if (eventListener != null) {
                 eventListener.onUpload();
@@ -151,6 +158,7 @@ public class MyService extends Service {
         void onUpdate(Emp_rating emp_rating);
 
         void onDetail(List<Detail> details);
+        void onAvails(List<String> avails);
 
         void onFinish();
     }
