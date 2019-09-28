@@ -30,6 +30,7 @@ import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
+import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
@@ -55,6 +56,7 @@ import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.tabs.ScreenSlidePagerAdapter;
 
 import static android.hardware.camera2.CameraCharacteristics.LENS_FACING;
+import static android.hardware.camera2.CameraMetadata.LENS_FACING_BACK;
 import static android.hardware.camera2.CameraMetadata.LENS_FACING_FRONT;
 import static ru.gamingcore.staffstats.utils.Avatar.setAvatar;
 
@@ -66,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static int PERMISSION_REQUEST_CODE = 123456;
-    private TextureView textureView;
-
+    SurfaceView sv;
 
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
@@ -90,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                     Image img = reader.acquireLatestImage();
                     try {
                         if (img == null) throw new NullPointerException("cannot be null");
-
                         ByteBuffer buffer = img.getPlanes()[0].getBuffer();
                         byte[] data = new byte[buffer.remaining()];
                         //TODO facccce
@@ -129,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             //open your camera here
+            System.out.println("onSurfaceTextureAvailable");
+
             openCamera(width, height);
         }
 
@@ -150,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
             //This is called when the camera is open
-            Log.e(TAG, "onOpened");
             cameraDevice = camera;
             createCameraPreview();
         }
@@ -264,7 +265,9 @@ public class MainActivity extends AppCompatActivity {
 
     protected void createCameraPreview() {
         try {
-            SurfaceTexture texture = textureView.getSurfaceTexture();
+            SurfaceView sv = new SurfaceView(getApplicationContext());
+            SurfaceTexture texture = new SurfaceTexture(10);
+
             if (texture != null) {
                 texture.setDefaultBufferSize(imageDimension.getWidth(), imageDimension.getHeight());
 
@@ -301,7 +304,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openCamera(int width, int height) {
-        Log.e(TAG, "openCamera X");
         setUpCameraOutputs(width, height);
 
         try {
@@ -326,9 +328,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 for (String cameraId : manager.getCameraIdList()) {
                     CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
-                    if (characteristics.get(LENS_FACING) == null || characteristics.get(LENS_FACING) == LENS_FACING_FRONT)
+                    if (characteristics.get(LENS_FACING) == null || characteristics.get(LENS_FACING) == LENS_FACING_BACK)
                         continue;
-
                     StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
                     if (map != null) {
                         Size min = getFullScreenPreview(map.getOutputSizes(sImageFormat), width, height);
@@ -338,17 +339,18 @@ public class MainActivity extends AppCompatActivity {
 
                         imageDimension = getFullScreenPreview(map.getOutputSizes(SurfaceTexture.class),
                                 width, height);
-                        Log.e(TAG, "imageDimension w = " + imageDimension.getWidth()
+                        System.out.println("imageDimension w = " + imageDimension.getWidth()
                                 + " h = " + imageDimension.getHeight());
 
                     }
+
                     mCameraId = cameraId;
                     break;
                 }
             } catch (CameraAccessException e) {
                 e.printStackTrace();
             }
-            Log.e(TAG, "setUpCameraOutputs X");
+            System.out.println("setUpCameraOutputs X");
         }
     }
 
@@ -376,14 +378,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         startBackgroundThread();
-        System.out.println("resume");
-        if (textureView.isAvailable()) {
-            openCamera(textureView.getWidth(), textureView.getHeight());
-            System.out.println("openCamera");
-        } else {
-            textureView.setSurfaceTextureListener(textureListener);
-            System.out.println("textureListener");
-        }
+        openCamera(480, 640);
     }
 
     @Override
@@ -395,6 +390,7 @@ public class MainActivity extends AppCompatActivity {
     private Size getFullScreenPreview(Size[] outputSizes, int width, int height) {
         float difference = 0f;
         Size fullScreenSize = null;
+
         while (fullScreenSize == null) {
             fullScreenSize = getFullScreenPreviewValue(outputSizes, width, height, null, difference);
             difference = difference + 0.10f;
@@ -435,7 +431,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textureView = findViewById(R.id.texture);
+        sv = new SurfaceView(this);
+
         main = findViewById(R.id.main);
         firstname = findViewById(R.id.firstname);
         lastname = findViewById(R.id.lastname);
@@ -475,14 +472,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        /*if(view.getId() == R.id.read) {
-            Intent intent = new Intent(this, QRActivity.class);
-            startActivity(intent);
-        } else if(view.getId() == R.id.error){
-            ViolationFragment  violation = new ViolationFragment();
-            violation.service = service;
-            violation.show(getSupportFragmentManager(), "Violation");
-        }*/
     }
 
     @Override

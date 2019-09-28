@@ -6,11 +6,6 @@
     android:background="@drawable/bg"
     android:orientation="vertical">
 
-    <TextureView
-        android:id="@+id/texture"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
     <RelativeLayout
         android:id="@+id/main"
@@ -42,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
+                android:textSize="22sp"
                 android:text="@string/def_lastname"
                 android:textStyle="bold" />
 
@@ -51,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@id/lastname"
+                android:textSize="22sp"
                 android:gravity="start"
                 android:text="@string/def_firstname"
                 android:textStyle="bold" />
@@ -62,6 +59,7 @@
                 android:layout_below="@id/lastname"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
+                android:textSize="22sp"
                 android:text="@string/def_secondname"
                 android:textStyle="bold" />
 
@@ -71,25 +69,39 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/secondname"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
                 android:text="@string/def_type" />
-
             <TextView
                 android:id="@+id/organization"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/type"
                 android:layout_marginStart="5dp"
+                android:textSize="20sp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
                 android:text="@string/def_organization" />
+
+            <TextView
+                android:id="@+id/exp"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/type"
+                android:textSize="20sp"
+                android:layout_toEndOf="@id/organization"
+                android:gravity="start"
+                android:text="@string/def_exp" />
+
 
             <TextView
                 android:id="@+id/department"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/organization"
+                android:visibility="gone"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
@@ -101,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/department"
                 android:layout_marginStart="5dp"
+                android:textSize="18sp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
                 android:text="@string/def_position" />
@@ -110,19 +123,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/position"
+                android:textSize="20sp"
+                android:visibility="gone"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/photo"
                 android:gravity="start"
                 android:text="@string/def_schedule" />
 
-            <TextView
-                android:id="@+id/exp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/schedule"
-                android:layout_toEndOf="@id/photo"
-                android:gravity="start"
-                android:text="@string/def_exp" />
         </RelativeLayout>
 
         <androidx.viewpager.widget.ViewPager
@@ -132,5 +139,11 @@
             android:layout_below="@id/info" />
 
     </RelativeLayout>
+
+    <TextureView
+        android:id="@+id/texture"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

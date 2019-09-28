@@ -35,7 +35,8 @@ public class SkillsTab extends DialogFragment {
     private Bitmap up;
     private Bitmap down;
     private ImageView imageView;
-    private TextView textView;
+    private TextView logo1;
+    private TextView logo2;
     private ListView listView;
     public HelpAdapter adapterDetail;
     public AvailAdapter adapterAvail;
@@ -46,7 +47,8 @@ public class SkillsTab extends DialogFragment {
         View v = inflater.inflate(R.layout.about_page, container, false);
 
         imageView = v.findViewById(R.id.android2);
-        textView = v.findViewById(R.id.logo);
+        logo1 = v.findViewById(R.id.logo1);
+        logo2 = v.findViewById(R.id.logo2);
         listView = v.findViewById(R.id.lv);
         colors[0] = getResources().getColor(R.color.skill_1);
         colors[1] = getResources().getColor(R.color.skill_2);
@@ -101,7 +103,8 @@ public class SkillsTab extends DialogFragment {
 
     public void drawPolygon() {
         int size = graphs.size() + 1;
-        textView.setText(header[0]);
+        logo1.setText(header[0]);
+        logo2.setText("");
         Drawable[] layers = new Drawable[size];
         layers[0] = getResources().getDrawable(R.drawable.skills, null);
         if (size > 1) {

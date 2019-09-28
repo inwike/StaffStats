@@ -24,7 +24,18 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
     public static final String UPLOAD_PHOTO = "upload_photo";
     public static final String EMP_RATING = "emp_rating";
     public static final String EMP_AVAIL = "emp_avail";
-    public static final String EMP_DETAILS = "emp_details";
+
+    public static final String EMP_DETAILS_KNLD = "detail_knld";
+    public static final String EMP_DETAILS_SOC = "detail_soc";
+    public static final String EMP_DETAILS_RESP = "detail_resp";
+    public static final String EMP_DETAILS_ACTIV = "detail_activ";
+    public static final String EMP_DETAILS_INNOV = "detail_innov";
+    public static final String EMP_DETAILS_ENT = "detail_ent";
+    public static final String DEFAULT_DATE = "09.2019";
+    public static final String DATE_DETAIL = "date_detail";
+
+
+
     private static final String TAG = "INWIKE";
     private String method = GET;
     private String host;

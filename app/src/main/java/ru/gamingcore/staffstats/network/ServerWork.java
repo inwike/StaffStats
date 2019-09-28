@@ -13,14 +13,15 @@ import ru.gamingcore.staffstats.json.JsonData;
 import ru.gamingcore.staffstats.json.Upload_data;
 import ru.gamingcore.staffstats.utils.ImageUtil;
 
+import static ru.gamingcore.staffstats.network.GetJsonAsync.DATE_DETAIL;
+import static ru.gamingcore.staffstats.network.GetJsonAsync.DEFAULT_DATE;
+
 public class ServerWork {
     private static final String TAG = "INWIKE";
-
     private static final String verif_id = "87433448-7cc0-11e2-9368-001b11b25590";
     private static final String HOST = "http://10.70.1.205/Inwike_HR/hs/Inwike/ID/";
     private static final String AUTH = "web:web";
     private static final String UID = "emp_uid";
-    private static final String DATE_DETAIL = "date_detail";
     private static final String FILE = "file";
 
     private String current_uid;
@@ -32,7 +33,6 @@ public class ServerWork {
             if (result == null) {
                 return;
             }
-
             try {
                 JSONObject obj = new JSONObject(result);
                 Emp_data emp_data = JsonData.ParseExec(obj);
@@ -116,10 +116,60 @@ public class ServerWork {
     }
 
     public void empDetails() {
+        empDetailsKnld();
+        empDetailsSoc();
+        empDetailsResp();
+        empDetailsActiv();
+        empDetailsInnov();
+        empDetailsEnt();
+
+    }
+
+    private void empDetailsKnld() {
         GetJsonAsync dataAsync = setRequest();
-        dataAsync.setCommand(GetJsonAsync.EMP_DETAILS);
+        dataAsync.setCommand(GetJsonAsync.EMP_DETAILS_KNLD);
         dataAsync.addParam(UID, current_uid);
-        dataAsync.addParam(DATE_DETAIL, "09.2019");//TODO bug)
+        dataAsync.addParam(DATE_DETAIL, DEFAULT_DATE);
+        dataAsync.execute();
+    }
+
+    private void empDetailsSoc() {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setCommand(GetJsonAsync.EMP_DETAILS_SOC);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.addParam(DATE_DETAIL, DEFAULT_DATE);
+        dataAsync.execute();
+    }
+
+    private void empDetailsResp() {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setCommand(GetJsonAsync.EMP_DETAILS_RESP);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.addParam(DATE_DETAIL, DEFAULT_DATE);
+        dataAsync.execute();
+    }
+
+    private void empDetailsActiv() {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setCommand(GetJsonAsync.EMP_DETAILS_ACTIV);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.addParam(DATE_DETAIL, DEFAULT_DATE);
+        dataAsync.execute();
+    }
+
+    private void empDetailsInnov() {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setCommand(GetJsonAsync.EMP_DETAILS_INNOV);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.addParam(DATE_DETAIL, DEFAULT_DATE);
+        dataAsync.execute();
+    }
+
+    private void empDetailsEnt() {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setCommand(GetJsonAsync.EMP_DETAILS_ENT);
+        dataAsync.addParam(UID, current_uid);
+        dataAsync.addParam(DATE_DETAIL, DEFAULT_DATE);
         dataAsync.execute();
     }
 
