@@ -25,7 +25,9 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.adapter.HelpAdapter;
@@ -35,7 +37,7 @@ import ru.gamingcore.staffstats.utils.Polygon;
 public class SkillsTab extends DialogFragment {
     public List<Polygon> graphs = new ArrayList<>();
     public HelpAdapter adapterDetail;
-    List<Detail> details;
+    public Map<String, List<Detail>> details = new HashMap<>();
     private String[] header = {"По специальности"};
     private int[] colors = new int[2];//blue, red
     private Bitmap up;
@@ -154,11 +156,11 @@ public class SkillsTab extends DialogFragment {
                 }
             });
         }
-        if (adapterDetail != null) {
-            adapterDetail.details.put(details.get(0).id, details);
-            adapterDetail.Update("knld");
-            adapterDetail.notifyDataSetChanged();
-        }
+        adapterDetail.details = details;
+        adapterDetail.Update("knld");
+        Log.e("TAG", "details" + details.size());
+        adapterDetail.notifyDataSetChanged();
+
         return v;
     }
 
@@ -231,9 +233,10 @@ public class SkillsTab extends DialogFragment {
     }
 
     public void update(List<Detail> details) {
-        this.details = details;
+        this.details.put(details.get(0).id, details);
+
         if (adapterDetail != null) {
-            adapterDetail.details.put(details.get(0).id, details);
+            adapterDetail.details = this.details;
             adapterDetail.Update("knld");
             adapterDetail.notifyDataSetChanged();
         }

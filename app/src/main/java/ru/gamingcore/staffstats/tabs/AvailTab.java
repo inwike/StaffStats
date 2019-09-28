@@ -31,7 +31,7 @@ public class AvailTab extends DialogFragment {
     List<Avail> avails;
     private ExpandableListView listView;
     private PieChart pieChart;
-    private List<PieEntry> entries;
+    private List<PieEntry> entries = new ArrayList<>();
     private PieDataSet pieDataSet;
     private PieData pieData;
 
@@ -61,7 +61,7 @@ public class AvailTab extends DialogFragment {
             }
         });
 
-        entries = new ArrayList<>();
+
         pieChart = v.findViewById(R.id.chart1);
         adapter = new AvailAdapter(getContext());
         listView.setAdapter(adapter);
@@ -105,7 +105,7 @@ public class AvailTab extends DialogFragment {
     }
 
     public void update() {
-        entries.clear();
+        entries = new ArrayList<>();
 
         for (int i = 0; i < avails.size(); i++) {
             entries.add(new PieEntry(33.3f, i));
@@ -114,17 +114,18 @@ public class AvailTab extends DialogFragment {
         if (adapter != null) {
             adapter.values = avails;
             adapter.notifyDataSetChanged();
-        }
 
-        if (avails.size() > 0) {
-            pieDataSet = new PieDataSet(entries, "");
-            pieData = new PieData(pieDataSet);
-            pieDataSet.setColors(getContext().getResources().getColor(R.color.color_3),
-                    getContext().getResources().getColor(R.color.color_4),
-                    getContext().getResources().getColor(R.color.color_5));
 
-            if (pieChart != null)
-                pieChart.setData(pieData);
+            if (avails.size() > 0) {
+                pieDataSet = new PieDataSet(entries, "");
+                pieData = new PieData(pieDataSet);
+                pieDataSet.setColors(getContext().getResources().getColor(R.color.color_3),
+                        getContext().getResources().getColor(R.color.color_4),
+                        getContext().getResources().getColor(R.color.color_5));
+
+                if (pieChart != null)
+                    pieChart.setData(pieData);
+            }
         }
     }
 
