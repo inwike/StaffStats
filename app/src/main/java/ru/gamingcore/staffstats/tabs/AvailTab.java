@@ -50,7 +50,6 @@ public class AvailTab extends DialogFragment {
 
         listView = v.findViewById(R.id.lv);
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 String obj = adapter.getChildUrl(groupPosition, childPosition);
@@ -63,6 +62,10 @@ public class AvailTab extends DialogFragment {
 
 
         pieChart = v.findViewById(R.id.chart1);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.getLegend().setEnabled(false);
+
+
         adapter = new AvailAdapter(getContext());
         listView.setAdapter(adapter);
         update();
@@ -108,7 +111,7 @@ public class AvailTab extends DialogFragment {
         entries = new ArrayList<>();
 
         for (int i = 0; i < avails.size(); i++) {
-            entries.add(new PieEntry(33.3f, i));
+            entries.add(new PieEntry(Float.valueOf(avails.get(i).percent), i));
         }
 
         if (adapter != null) {
@@ -119,6 +122,7 @@ public class AvailTab extends DialogFragment {
             if (avails.size() > 0) {
                 pieDataSet = new PieDataSet(entries, "");
                 pieData = new PieData(pieDataSet);
+
                 pieDataSet.setColors(getContext().getResources().getColor(R.color.color_3),
                         getContext().getResources().getColor(R.color.color_4),
                         getContext().getResources().getColor(R.color.color_5));

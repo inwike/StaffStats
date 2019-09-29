@@ -142,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
                         String bs = Base64.encodeToString(data, Base64.NO_WRAP);
                         if (service != null) {
                             service.serverWork.Test(bs);
-
                         }
 
                     } catch (NullPointerException ex) {
@@ -183,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
             service.serverWork.empRating();
             service.serverWork.empDetails();
             service.serverWork.empAvail();
+            service.serverWork.Smile("1");
         }
 
         @Override
@@ -463,7 +463,6 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
             @Override
             public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
                 super.onFragmentViewDestroyed(fm, f);
-                //startMain();
                 fm.unregisterFragmentLifecycleCallbacks(this);
             }
         }, false);

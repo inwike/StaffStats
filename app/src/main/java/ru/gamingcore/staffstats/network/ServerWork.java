@@ -30,6 +30,8 @@ public class ServerWork {
     private static final String FILE = "file";
     private static final String LOGIN = "login";
     private static final String PWD = "password";
+    private static final String SMILE = "smile";
+
 
     public String current_uid;
 
@@ -206,6 +208,14 @@ public class ServerWork {
         dataAsync.setCommand(GetJsonAsync.UPLOAD_PHOTO);
         dataAsync.addParam(UID, current_uid);
         dataAsync.addParam(FILE, ImageUtil.convert(bitmap));
+        dataAsync.execute();
+    }
+
+    public void Smile(String smile) {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setMethod(GetJsonAsync.POST);
+        dataAsync.setCommand(GetJsonAsync.EMP_SMILE);
+        dataAsync.addParam(SMILE, smile);
         dataAsync.execute();
     }
 

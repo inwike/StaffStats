@@ -70,6 +70,21 @@ public class AvailAdapter extends BaseExpandableListAdapter {
         }
         Avail p = values.get(position);
         ((TextView) view.findViewById(R.id.value)).setText(p.name);
+        int skill = R.drawable.skill_item_3;
+        switch(position) {
+            case 0:
+                skill = R.drawable.skill_item_3;
+                break;
+            case 1:
+                skill = R.drawable.skill_item_4;
+                break;
+            case 2:
+                skill = R.drawable.skill_item_5;
+                break;
+        }
+
+        ((TextView) view.findViewById(R.id.value)).setCompoundDrawablesWithIntrinsicBounds( skill, 0, 0, 0);
+
         return view;
     }
 
@@ -82,6 +97,7 @@ public class AvailAdapter extends BaseExpandableListAdapter {
         }
         String p = values.get(position).train.get(i1);
         ((TextView) view.findViewById(R.id.value)).setText(p);
+
         return view;
     }
 

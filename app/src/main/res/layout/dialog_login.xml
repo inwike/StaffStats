@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="vertical"
+    android:background="@drawable/layout_login"
     android:padding="@dimen/dialog_padding"
     tools:ignore="UseCompoundDrawables">
 

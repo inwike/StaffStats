@@ -97,6 +97,7 @@ public class JsonData {
                 Avail a = new Avail();
                 JSONObject obj = arr.getJSONObject(i);
                 a.name = obj.getString("Рекомендация");
+                a.percent= obj.getString("ПроцентСоответствия");
                 JSONArray tmparr = obj.getJSONArray("Обучение");
                 for (int j = 0; j < tmparr.length(); j++) {
                     JSONObject tmpobj = tmparr.getJSONObject(j);
