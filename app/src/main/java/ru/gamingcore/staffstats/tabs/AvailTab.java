@@ -25,6 +25,7 @@ import java.util.List;
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.adapter.AvailAdapter;
 import ru.gamingcore.staffstats.json.Avail;
+import ru.gamingcore.staffstats.json.ValueFmt;
 
 public class AvailTab extends DialogFragment {
     public AvailAdapter adapter;
@@ -122,7 +123,7 @@ public class AvailTab extends DialogFragment {
             if (avails.size() > 0) {
                 pieDataSet = new PieDataSet(entries, "");
                 pieData = new PieData(pieDataSet);
-
+                pieDataSet.setValueFormatter(new ValueFmt());
                 pieDataSet.setColors(getContext().getResources().getColor(R.color.color_3),
                         getContext().getResources().getColor(R.color.color_4),
                         getContext().getResources().getColor(R.color.color_5));

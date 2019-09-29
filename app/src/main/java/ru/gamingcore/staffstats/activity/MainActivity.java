@@ -36,7 +36,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import Service.Service;
 import ru.gamingcore.staffstats.MyService;
 import ru.gamingcore.staffstats.R;
 import ru.gamingcore.staffstats.finger.AuthorizeDialog;
@@ -60,6 +60,7 @@ import ru.gamingcore.staffstats.tabs.ScreenSlidePagerAdapter;
 
 import static android.hardware.camera2.CameraCharacteristics.LENS_FACING;
 import static android.hardware.camera2.CameraMetadata.LENS_FACING_BACK;
+import static ru.gamingcore.staffstats.network.ServerWork.GOHOST;
 import static ru.gamingcore.staffstats.utils.Avatar.setAvatar;
 
 
@@ -70,8 +71,10 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
     private static final int PERMISSION_REQUEST_CODE = 123456;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static final int sImageFormat = ImageFormat.JPEG;
-    private   String login;
-    private   String pwd;
+    private String login;
+    private String pwd;
+    private int emotion = -1;
+
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
         ORIENTATIONS.append(Surface.ROTATION_90, 0);
@@ -141,11 +144,19 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
                         buffer.get(data);
                         String bs = Base64.encodeToString(data, Base64.NO_WRAP);
                         if (service != null) {
-                            service.serverWork.Test(bs);
+                            byte[] h = Service.sendRecv(GOHOST, data);
+                            String emo = new String(h);
+                            if (emo.contains("грустный") || emo.contains("отвращение") || emo.contains("страх") || emo.contains("сердитый"))
+                                emotion = 0;
+                            else {
+                                emotion = 1;
+                            }
                         }
 
                     } catch (NullPointerException ex) {
                         ex.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     } finally {
                         if (img != null)
                             img.close();
@@ -182,7 +193,6 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
             service.serverWork.empRating();
             service.serverWork.empDetails();
             service.serverWork.empAvail();
-            service.serverWork.Smile("1");
         }
 
         @Override
@@ -207,6 +217,9 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
             pagerAdapter.updateAvails(avails);
             pb.setVisibility(View.GONE);
             main.setVisibility(View.VISIBLE);
+            if(emotion >=0) {
+                service.serverWork.Smile(String.valueOf(emotion));
+            }
         }
 
         @Override
@@ -379,7 +392,7 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
     protected void onResume() {
         super.onResume();
         startBackgroundThread();
-        openCamera(480, 640);
+        openCamera(720, 1280);
     }
 
     @Override
@@ -482,7 +495,7 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
     }
 
     private void startMain() {
-        service.serverWork.Auth(login,pwd);
+        service.serverWork.Auth(login, pwd);
         pb.setVisibility(View.VISIBLE);
     }
 

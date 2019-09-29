@@ -23,8 +23,9 @@ import static ru.gamingcore.staffstats.network.GetJsonAsync.DEFAULT_DATE;
 
 public class ServerWork {
     private static final String TAG = "INWIKE";
-   // private static final String verif_id = "87433448-7cc0-11e2-9368-001b11b25590";
     private static final String HOST = "http://192.168.137.1/Inwike_HR/hs/Inwike/ID/";
+    public static final String GOHOST = "http://192.168.137.211:21000/recognize";
+
     private static final String AUTH = "web:web";
     private static final String UID = "emp_uid";
     private static final String FILE = "file";
@@ -127,16 +128,6 @@ public class ServerWork {
         dataAsync.execute();
     }
 
-    public void Test(String image) {
-        GetJsonAsync dataAsync = new GetJsonAsync();
-        dataAsync.setHost("http://10.70.0.149:21000/");
-        dataAsync.setCommand("recognize");
-        dataAsync.setAuth("");
-        dataAsync.setMethod(GetJsonAsync.POST);
-        dataAsync.addParam("image", image);
-        dataAsync.execute();
-    }
-
     public void empAvail() {
         GetJsonAsync dataAsync = setRequest();
         dataAsync.setCommand(GetJsonAsync.EMP_RECOM);
@@ -151,7 +142,6 @@ public class ServerWork {
         empDetailsActiv();
         empDetailsInnov();
         empDetailsEnt();
-
     }
 
     private void empDetailsKnld() {
@@ -213,6 +203,7 @@ public class ServerWork {
 
     public void Smile(String smile) {
         GetJsonAsync dataAsync = setRequest();
+        dataAsync.addParam(UID, current_uid);
         dataAsync.setMethod(GetJsonAsync.POST);
         dataAsync.setCommand(GetJsonAsync.EMP_SMILE);
         dataAsync.addParam(SMILE, smile);

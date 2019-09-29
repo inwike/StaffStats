@@ -122,8 +122,6 @@ public class GetJsonAsync extends AsyncTask<Void, Void, String> {
                 listener.onError();
             }
         }
-        Log.e("answer",answer);
-
         return answer;
     }
 
