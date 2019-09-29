@@ -36,6 +36,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,14 +63,15 @@ import static android.hardware.camera2.CameraMetadata.LENS_FACING_BACK;
 import static ru.gamingcore.staffstats.utils.Avatar.setAvatar;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AuthorizeDialog.OnMyDialogClick {
     private static final String TAG = "INWIKE";
     private static final int SET_AVATAR_CODE = 777;
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     private static final int PERMISSION_REQUEST_CODE = 123456;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private static final int sImageFormat = ImageFormat.JPEG;
-
+    private   String login;
+    private   String pwd;
     static {
         ORIENTATIONS.append(Surface.ROTATION_0, 90);
         ORIENTATIONS.append(Surface.ROTATION_90, 0);
@@ -165,11 +167,28 @@ public class MainActivity extends AppCompatActivity {
         public void onError() {
         }
 
+        /*
+
+         */
         @Override
         public void onUpload() {
             if (photo != null && tmp != null) {
                 photo.setImageBitmap(tmp);
             }
+        }
+
+        @Override
+        public void onAuth() {
+            service.serverWork.execData();
+            service.serverWork.empRating();
+            service.serverWork.empDetails();
+            service.serverWork.empAvail();
+        }
+
+        @Override
+        public void onAuthError() {
+            pb.setVisibility(View.GONE);
+            Authorize();
         }
 
         @Override
@@ -224,12 +243,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 service.initLocation();
             }
-
-            service.serverWork.execData();
-            service.serverWork.empRating();
-            service.serverWork.empDetails();
-            service.serverWork.empAvail();
-
         }
 
         public void onServiceDisconnected(ComponentName name) {
@@ -437,17 +450,20 @@ public class MainActivity extends AppCompatActivity {
         pager.setAdapter(pagerAdapter);
         pager.setOffscreenPageLimit(2);
         pager.addOnPageChangeListener(pagerListener);
+        Intent intent = new Intent(this, MyService.class);
+        bindService(intent, sConn, BIND_AUTO_CREATE);
         Authorize();
     }
 
     private void Authorize() {
         AuthorizeDialog dialog = new AuthorizeDialog();
+        dialog.mOnMyDialogClick = this;
         dialog.setCancelable(false);
         getSupportFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
             @Override
             public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
                 super.onFragmentViewDestroyed(fm, f);
-                startMain();
+                //startMain();
                 fm.unregisterFragmentLifecycleCallbacks(this);
             }
         }, false);
@@ -467,8 +483,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startMain() {
-        Intent intent = new Intent(this, MyService.class);
-        bindService(intent, sConn, BIND_AUTO_CREATE);
+        service.serverWork.Auth(login,pwd);
         pb.setVisibility(View.VISIBLE);
     }
 
@@ -484,6 +499,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select avatar"), SET_AVATAR_CODE);
+    }
+
+    @Override
+    public void onPositiveButtonClick(String login, String pwd) {
+        this.login = login;
+        this.pwd = pwd;
+        startMain();
     }
 
     class UpdateAsync extends AsyncTask<Uri, Void, Bitmap> {

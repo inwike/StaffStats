@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import java.util.List;
 
+import ru.gamingcore.staffstats.json.Auth;
 import ru.gamingcore.staffstats.json.Avail;
 import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.json.Emp_data;
@@ -66,6 +67,20 @@ public class MyService extends Service {
             MyService.this.avails = avails;
             if (eventListener != null) {
                 eventListener.updateAvails(avails);
+            }
+        }
+
+        @Override
+        public void onAuth(Auth uid) {
+            if(!uid.fined) {
+                if (eventListener != null) {
+                    eventListener.onAuthError();
+                }
+            } else {
+                serverWork.current_uid = uid.emp_uid;
+                if (eventListener != null) {
+                    eventListener.onAuth();
+                }
             }
         }
 
@@ -157,6 +172,10 @@ public class MyService extends Service {
         void onError();
 
         void onUpload();
+
+        void onAuth();
+
+        void onAuthError();
 
         void onUpdate(Emp_rating emp_rating);
 

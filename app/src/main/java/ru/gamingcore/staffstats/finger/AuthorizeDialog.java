@@ -24,9 +24,16 @@ import ru.gamingcore.staffstats.R;
 
 public class AuthorizeDialog extends DialogFragment implements DialogInterface.OnClickListener {
     private static final String PIN = "pin";
-    private EditText mEditText;
+    private EditText Login;
+    private EditText Pwd;
+
     private SharedPreferences mPreferences;
     private FingerprintHelper mFingerprintHelper;
+    public OnMyDialogClick mOnMyDialogClick;
+
+    public interface OnMyDialogClick {
+        void onPositiveButtonClick(String login, String pwd);
+    }
 
     @NonNull
     @Override
@@ -35,7 +42,7 @@ public class AuthorizeDialog extends DialogFragment implements DialogInterface.O
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Activity activity = getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        View view = LayoutInflater.from(activity).inflate(R.layout.dialog_fingerprint, null, false);
+        View view = LayoutInflater.from(activity).inflate(R.layout.dialog_login, null, false);
 
         builder.setTitle(R.string.app_name)
                 .setCancelable(true)
@@ -43,22 +50,29 @@ public class AuthorizeDialog extends DialogFragment implements DialogInterface.O
                 .setPositiveButton(R.string.enter, this);
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        mEditText = view.findViewById(R.id.editText);
+        Login = view.findViewById(R.id.Login);
+        Pwd = view.findViewById(R.id.Pwd);
 
         return builder.create();
     }
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        prepareLogin();
+        //prepareLogin();
+        final String login = Login.getText().toString();
+        final String pwd = Pwd.getText().toString();
+
+        if (mOnMyDialogClick != null) {
+            mOnMyDialogClick.onPositiveButtonClick(login, pwd);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (mPreferences.contains(PIN)) {
+       /* if (mPreferences.contains(PIN)) {
             prepareSensor();
-        }
+        }*/
     }
 
     @Override
@@ -66,38 +80,6 @@ public class AuthorizeDialog extends DialogFragment implements DialogInterface.O
         super.onStop();
         if (mFingerprintHelper != null) {
             mFingerprintHelper.cancel();
-        }
-    }
-
-    private void prepareLogin() {
-
-        final String pin = mEditText.getText().toString();
-        if (pin.length() > 0) {
-            savePin(pin);
-        } else {
-            Toast.makeText(getContext(), "pin is empty", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void savePin(String pin) {
-        if (FingerprintUtils.isSensorStateAt(FingerprintUtils.mSensorState.READY, getContext())) {
-            String encoded = CryptoUtils.encode(pin);
-            mPreferences.edit().putString(PIN, encoded).apply();
-        }
-    }
-
-    private void prepareSensor() {
-        if (FingerprintUtils.isSensorStateAt(FingerprintUtils.mSensorState.READY, getContext())) {
-            FingerprintManagerCompat.CryptoObject cryptoObject = CryptoUtils.getCryptoObject();
-            if (cryptoObject != null) {
-                //    Toast.makeText(getContext(), "use fingerprint to login", Toast.LENGTH_LONG).show();
-                mFingerprintHelper = new FingerprintHelper(getContext());
-                mFingerprintHelper.startAuth(cryptoObject);
-            } else {
-                mPreferences.edit().remove(PIN).apply();
-                Toast.makeText(getContext(), "new fingerprint enrolled. enter pin again", Toast.LENGTH_SHORT).show();
-            }
-
         }
     }
 

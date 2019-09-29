@@ -110,4 +110,16 @@ public class JsonData {
         }
         return result;
     }
+
+    public static Auth ParseAuth(JSONObject obj) {
+        Auth auth = new Auth();
+        try {
+            auth.emp_uid = obj.getString("emp_id");
+            auth.fined = obj.getBoolean("fined");
+        } catch (JSONException e) {
+            return null;
+        }
+        return auth;
+    }
+
 }

@@ -1,6 +1,7 @@
 package ru.gamingcore.staffstats.network;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import ru.gamingcore.staffstats.json.Auth;
 import ru.gamingcore.staffstats.json.Avail;
 import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.json.Emp_data;
@@ -21,13 +23,15 @@ import static ru.gamingcore.staffstats.network.GetJsonAsync.DEFAULT_DATE;
 
 public class ServerWork {
     private static final String TAG = "INWIKE";
-    private static final String verif_id = "87433448-7cc0-11e2-9368-001b11b25590";
+   // private static final String verif_id = "87433448-7cc0-11e2-9368-001b11b25590";
     private static final String HOST = "http://192.168.137.1/Inwike_HR/hs/Inwike/ID/";
     private static final String AUTH = "web:web";
     private static final String UID = "emp_uid";
     private static final String FILE = "file";
+    private static final String LOGIN = "login";
+    private static final String PWD = "password";
 
-    private String current_uid;
+    public String current_uid;
 
     private Listener listener;
     private GetJsonAsync.AsyncTaskListener resultListener = new GetJsonAsync.AsyncTaskListener() {
@@ -36,11 +40,19 @@ public class ServerWork {
             if (result == null) {
                 return;
             }
+            Log.e("LOG",result);
             try {
                 JSONObject obj = new JSONObject(result);
                 Emp_data emp_data = JsonData.ParseExec(obj);
                 Emp_rating emp_rating = JsonData.ParseRating(obj);
                 Upload_data upload_data = JsonData.ParseUpload(obj);
+                Auth auth = JsonData.ParseAuth(obj);
+
+                if (auth != null) {
+                    listener.onAuth(auth);
+                    return;
+                }
+
                 if (upload_data != null) {
                     listener.onUpload();
                     return;
@@ -60,6 +72,7 @@ public class ServerWork {
                 JSONArray array = new JSONArray(result);
                 List<Detail> details = JsonData.ParseDetail(array);
                 List<Avail> avails = JsonData.ParseAvail(array);
+
 
                 if (avails != null && avails.size() > 0) {
                     listener.onAvails(avails);
@@ -99,7 +112,6 @@ public class ServerWork {
     }
 
     public void execData() {
-        current_uid = verif_id;
         GetJsonAsync dataAsync = setRequest();
         dataAsync.setCommand(GetJsonAsync.EXEC_DATA);
         dataAsync.addParam(UID, current_uid);
@@ -197,6 +209,15 @@ public class ServerWork {
         dataAsync.execute();
     }
 
+    public void Auth(String login, String pwd) {
+        GetJsonAsync dataAsync = setRequest();
+        dataAsync.setMethod(GetJsonAsync.POST);
+        dataAsync.setCommand(GetJsonAsync.EMP_UID);
+        dataAsync.addParam(LOGIN, login);
+        dataAsync.addParam(PWD, pwd);
+        dataAsync.execute();
+    }
+
     public interface Listener {
         void onExec_data(Emp_data emp_data);
 
@@ -205,6 +226,8 @@ public class ServerWork {
         void onDetails(List<Detail> details);
 
         void onAvails(List<Avail> details);
+
+        void onAuth(Auth uid);
 
         void onError();
 

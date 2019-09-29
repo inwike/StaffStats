@@ -51,4 +51,6 @@
     <string name="ent">Мотивация</string>
     <string name="def_exp">0 years</string>
     <string name="news">Рекомендации</string>
+    <string name="login">Логин:</string>
+    <string name="pass">Пароль:</string>
 </resources>
