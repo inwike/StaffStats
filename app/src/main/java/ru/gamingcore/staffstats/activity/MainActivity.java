@@ -177,9 +177,6 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
         public void onError() {
         }
 
-        /*
-
-         */
         @Override
         public void onUpload() {
             if (photo != null && tmp != null) {
@@ -219,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
             main.setVisibility(View.VISIBLE);
             if(emotion >=0) {
                 service.serverWork.Smile(String.valueOf(emotion));
+                closeCamera();
             }
         }
 
@@ -391,8 +389,10 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
     @Override
     protected void onResume() {
         super.onResume();
-        startBackgroundThread();
-        openCamera(720, 1280);
+        if(emotion < 0) {
+            startBackgroundThread();
+            openCamera(720, 1280);
+        }
     }
 
     @Override
