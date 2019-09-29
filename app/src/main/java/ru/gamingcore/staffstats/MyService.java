@@ -129,45 +129,6 @@ public class MyService extends Service {
         super.onDestroy();
     }
 
-    /* Location */
-    @SuppressLint("MissingPermission")
-    public void initLocation() {
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        if (locationManager != null) {
-
-            boolean gps_enabled = false;
-            boolean network_enabled = false;
-
-            try {
-                gps_enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            } catch (Exception ignored) {
-            }
-
-            try {
-                network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-            } catch (Exception ignored) {
-            }
-
-            if (!gps_enabled && !network_enabled) {
-                // notify user
-                new AlertDialog.Builder(this)
-                        .setMessage(R.string.gps_network_not_enabled)
-                        .setNegativeButton(R.string.Cancel, null)
-                        .setPositiveButton(R.string.open_location_settings, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                            }
-                        }).show();
-            }
-
-            locationListener = new MyLocationListener();
-            locationManager.requestLocationUpdates(LocationManager
-                    .NETWORK_PROVIDER, 50000, 500, locationListener);
-        }
-    }
-
     public interface EventListener {
         void onError();
 

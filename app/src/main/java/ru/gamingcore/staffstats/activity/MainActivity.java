@@ -238,22 +238,6 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
         public void onServiceConnected(ComponentName name, IBinder binder) {
             service = ((MyService.LocalBinder) binder).getService();
             service.setEventListener(eventListener);
-
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED &&
-                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(
-                        new String[]{
-                                Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.CAMERA,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        },
-                        PERMISSION_REQUEST_CODE);
-            } else {
-                service.initLocation();
-            }
         }
 
         public void onServiceDisconnected(ComponentName name) {
@@ -481,17 +465,6 @@ public class MainActivity extends AppCompatActivity implements AuthorizeDialog.O
         }, false);
 
         dialog.show(getSupportFragmentManager(), "AuthorizeDialog");
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == PERMISSION_REQUEST_CODE && grantResults.length == 2) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                service.initLocation();
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void startMain() {

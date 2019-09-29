@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,25 +19,40 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import ru.gamingcore.staffstats.R;
+import ru.gamingcore.staffstats.adapter.HelpAdapter;
+import ru.gamingcore.staffstats.json.Detail;
 import ru.gamingcore.staffstats.json.Emp_rating;
 import ru.gamingcore.staffstats.utils.Polygon;
 
-public class SkillsTab2 extends DialogFragment implements View.OnClickListener, View.OnTouchListener {
-
+public class SkillsTab2 extends DialogFragment implements View.OnClickListener {
     public Emp_rating emp_rating = new Emp_rating();
     private int[] colors = new int[2];//blue, red
+    public Map<String, List<Detail>> details = new HashMap<>();
+    public HelpAdapter adapterDetail  ;
+    private ListView listView;
+    private BottomSheetBehavior sheetBehavior;
+    private String[] help = {"knld", "soc", "resp", "activ", "innov", "ent"};
+    private ImageView imageView;
+
     private Bitmap up;
     private Bitmap down;
     private RelativeLayout InfoMain;
 
-    private ImageView imageView;
     private TextView logo1;
     private TextView logo2;
 
@@ -75,8 +91,91 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener, 
         drawYellow(-1);
         logo2 = v.findViewById(R.id.logo2);
         drawPolygon();
+
+        adapterDetail = new HelpAdapter(getContext());
+        listView = v.findViewById(R.id.lv);
+        listView.setAdapter(adapterDetail);
+        RelativeLayout linearLayout = v.findViewById(R.id.bottom_sheet);
+        sheetBehavior = BottomSheetBehavior.from(linearLayout);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull final View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        Log.e("err", "STATE_HIDDEN");
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        Log.e("err", "STATE_EXPANDED");
+                        for (int i = 0; i < 6; i++) {
+                            final int t = i;
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                            );
+                            params.setMargins(0, 25, 0, 0);
+                            view[t].setLayoutParams(params);
+                        }
+                        drawYellow(0);
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        Log.e("err", "STATE_COLLAPSED");
+                        for (int i = 0; i < 6; i++) {
+                            final int t = i;
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                            );
+                            params.setMargins(0, 0, 0, 0);
+                            view[t].setLayoutParams(params);
+                        }
+                        drawYellow(-1);
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        Log.e("err", "STATE_DRAGGING");
+
+                        for (int i = 0; i < 6; i++) {
+                            final int t = i;
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                            );
+                            params.setMargins(0, 0, 0, 0);
+                            view[t].setLayoutParams(params);
+                        }
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        Log.e("err", "STATE_SETTLING");
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+
+        for (int i = 0; i < 6; i++) {
+            final int t = i;
+            view[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                        adapterDetail.Update(help[t]);
+                        drawYellow(t);
+                        adapterDetail.notifyDataSetChanged();
+                    }
+                }
+            });
+        }
+        adapterDetail.details = details;
+        adapterDetail.Update("knld");
+        Log.e("TAG", "details" + details.size());
+        adapterDetail.notifyDataSetChanged();
+
         return v;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -221,8 +320,15 @@ public class SkillsTab2 extends DialogFragment implements View.OnClickListener, 
         switchBlock();
     }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        return false;
+
+    public void update(List<Detail> details) {
+        this.details.put(details.get(0).id, details);
+
+        if (adapterDetail != null) {
+            adapterDetail.details = this.details;
+            adapterDetail.Update("knld");
+            adapterDetail.notifyDataSetChanged();
+        }
+
     }
 }
